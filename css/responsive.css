@@ -1,0 +1,211 @@
+/* ==========================================
+   Responsive CSS
+   B.Tech CSE Department Dashboard
+========================================== */
+
+/* Large Screens (1200px and below) */
+@media (max-width:1200px){
+
+.container{
+    width:95%;
+}
+
+.dashboard-cards{
+    grid-template-columns:repeat(3,1fr);
+}
+
+table{
+    font-size:15px;
+}
+
+}
+
+/* Tablets (992px and below) */
+@media (max-width:992px){
+
+.sidebar{
+    width:220px;
+}
+
+.main-content{
+    margin-left:220px;
+}
+
+.dashboard-cards{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.card{
+    padding:20px;
+}
+
+header h1{
+    font-size:24px;
+}
+
+table{
+    font-size:14px;
+}
+
+}
+
+/* Mobile Devices (768px and below) */
+@media (max-width:768px){
+
+body{
+    overflow-x:hidden;
+}
+
+.sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+}
+
+.sidebar ul{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.sidebar ul li{
+    margin:8px;
+}
+
+.sidebar ul li a{
+    font-size:15px;
+}
+
+.main-content{
+    margin-left:0;
+    padding:20px;
+}
+
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+.card{
+    width:100%;
+}
+
+table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+img{
+    max-width:100%;
+    height:auto;
+}
+
+button{
+    width:100%;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+}
+
+.chat-box{
+    height:300px;
+}
+
+}
+
+/* Small Phones (576px and below) */
+@media (max-width:576px){
+
+header{
+    text-align:center;
+    padding:15px;
+}
+
+header h1{
+    font-size:22px;
+}
+
+h2{
+    font-size:20px;
+}
+
+.card h3{
+    font-size:18px;
+}
+
+.card p{
+    font-size:14px;
+}
+
+.sidebar ul{
+    flex-direction:column;
+    align-items:center;
+}
+
+.sidebar ul li{
+    width:100%;
+    text-align:center;
+}
+
+table{
+    font-size:13px;
+}
+
+th,
+td{
+    padding:8px;
+}
+
+button{
+    font-size:15px;
+    padding:10px;
+}
+
+}
+
+/* Very Small Devices (400px and below) */
+@media (max-width:400px){
+
+header h1{
+    font-size:18px;
+}
+
+h2{
+    font-size:18px;
+}
+
+.card{
+    padding:15px;
+}
+
+.card h3{
+    font-size:16px;
+}
+
+.card p{
+    font-size:13px;
+}
+
+.sidebar ul li a{
+    font-size:14px;
+}
+
+button{
+    font-size:14px;
+}
+
+input,
+select{
+    font-size:14px;
+}
+
+.chat-box{
+    height:250px;
+}
+
+}

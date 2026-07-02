@@ -1,0 +1,556 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Placements | CSE ERP Dashboard</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<link rel="stylesheet" href="../css/dark-mode.css">
+<link rel="stylesheet" href="../css/erp-modern.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="../js/darkmode.js"></script>
+
+<style>
+ <!-- =========================
+Placement Summary Cards
+========================= -->
+
+<div class="summary-cards">
+
+    <div class="card">
+        <h3>Total Students</h3>
+        <h2 id="totalStudentsCard">7</h2>
+    </div>
+
+    <div class="card">
+        <h3>Registered</h3>
+        <h2 id="registeredCard">7</h2>
+    </div>
+
+    <div class="card">
+        <h3>Placed</h3>
+        <h2 id="placedCard">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Placement %</h3>
+        <h2 id="percentageCard">0%</h2>
+    </div>
+
+</div>
+
+<!-- =========================
+Search + Buttons
+========================= -->
+
+<div class="section-header">
+
+    <div style="display:flex;gap:10px;align-items:center;flex:1;">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search Student..."
+            style="
+                flex:1;
+                padding:10px;
+                border:1px solid #ccc;
+                border-radius:8px;
+            ">
+
+        <button class="add-btn" onclick="openPlacementForm()">
+            <i class="fas fa-plus"></i>
+            Add Student
+        </button>
+
+    </div>
+
+</div>
+ <!-- ==========================
+Placement Statistics Cards
+========================== -->
+
+<div class="summary-cards">
+
+    <div class="card">
+        <h3>Total Students</h3>
+        <h2 id="totalStudentsCard">7</h2>
+    </div>
+
+    <div class="card">
+        <h3>Registered</h3>
+        <h2 id="registeredStudentsCard">7</h2>
+    </div>
+
+    <div class="card">
+        <h3>Placed</h3>
+        <h2 id="placedStudentsCard">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Placement %</h3>
+        <h2 id="placementPercentage">0%</h2>
+    </div>
+
+</div>
+
+<!-- ==========================
+Search & Buttons
+========================== -->
+
+<div class="section-header">
+
+    <h2>Placement Preparation Status</h2>
+
+    <div>
+
+        <input
+            type="text"
+            id="searchStudent"
+            placeholder="Search Student..."
+            style="padding:10px;border:1px solid #ccc;border-radius:8px;">
+
+        <button class="add-btn" onclick="openPlacementForm()">
+            <i class="fas fa-plus"></i> Add Student
+        </button>
+
+        <button id="export-csv">
+            Export CSV
+        </button>
+
+    </div>
+
+</div>
+  <!-- Placement Summary Cards -->
+
+<div class="summary-cards">
+
+    <div class="card">
+        <h3>Total Students</h3>
+        <h2 id="totalStudents">7</h2>
+    </div>
+
+    <div class="card">
+        <h3>Registered</h3>
+        <h2 id="registeredStudents">7</h2>
+    </div>
+
+    <div class="card">
+        <h3>Placed</h3>
+        <h2 id="placedStudents">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Placement %</h3>
+        <h2 id="placementPercent">0%</h2>
+    </div>
+
+</div>
+
+<!-- Search -->
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search Student / Register Number">
+
+    <select id="statusFilter">
+
+        <option value="">All Status</option>
+
+        <option value="Preparing">Preparing</option>
+
+        <option value="Placed">Placed</option>
+
+        <option value="Not Eligible">Not Eligible</option>
+
+    </select>
+
+</div>
+<!-- ===============================
+PLACEMENT PREPARATION SUMMARY
+=============================== -->
+
+<div class="card">
+
+    <h2>Placement Preparation Summary</h2>
+
+    <div class="summary-cards">
+
+        <div class="card">
+            <h3>Total Students</h3>
+            <h2 id="totalStudents">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Preparing</h3>
+            <h2 id="preparingStudents">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Placed</h3>
+            <h2 id="placedStudents">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Companies</h3>
+            <h2 id="companyCount">7</h2>
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================
+Search + Filter + Buttons
+===================================== -->
+
+<div class="section-header">
+
+    <h2>Placement Students</h2>
+
+    <div style="display:flex;gap:10px;align-items:center;">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search Student..."
+            style="
+                width:260px;
+                padding:10px;
+                border:1px solid #ccc;
+                border-radius:8px;
+            ">
+
+        <select
+            id="statusFilter"
+            style="
+                padding:10px;
+                border:1px solid #ccc;
+                border-radius:8px;
+            ">
+
+            <option value="">All Status</option>
+
+            <option value="Preparing">Preparing</option>
+
+            <option value="Placed">Placed</option>
+
+            <option value="Interview">Interview</option>
+
+            <option value="Rejected">Rejected</option>
+
+        </select>
+
+        <button class="add-btn" onclick="openPlacementForm()">
+
+            <i class="fas fa-plus"></i>
+
+            Add Student
+
+        </button>
+
+        <button id="export-csv">
+
+            <i class="fas fa-file-csv"></i>
+
+            Export CSV
+
+        </button>
+
+    </div>
+
+</div>
+<!-- =====================================
+Placement Student Table
+===================================== -->
+
+<div class="table-wrapper">
+
+<table id="placementTable">
+
+<thead>
+
+<tr>
+
+<th>Reg No</th>
+
+<th>Student Name</th>
+
+<th>Company</th>
+
+<th>Role</th>
+
+<th>Package</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>240310101001</td>
+
+<td>Hari Prakash</td>
+
+<td>TCS</td>
+
+<td>ASE</td>
+
+<td>3.6 LPA</td>
+
+<td>
+<span class="status">Preparing</span>
+</td>
+
+<td>
+
+<button class="view-btn">
+<i class="fas fa-eye"></i>
+</button>
+
+<button class="edit-btn">
+<i class="fas fa-pen"></i>
+</button>
+
+<button class="delete-btn">
+<i class="fas fa-trash"></i>
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>240310101002</td>
+
+<td>Lokeshwaran</td>
+
+<td>Infosys</td>
+
+<td>System Engineer</td>
+
+<td>3.8 LPA</td>
+
+<td>
+<span class="status">Preparing</span>
+</td>
+
+<td>
+
+<button class="view-btn">
+<i class="fas fa-eye"></i>
+</button>
+
+<button class="edit-btn">
+<i class="fas fa-pen"></i>
+</button>
+
+<button class="delete-btn">
+<i class="fas fa-trash"></i>
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>240310101003</td>
+
+<td>Lorin Tedros</td>
+
+<td>Zoho</td>
+
+<td>Developer</td>
+
+<td>5 LPA</td>
+
+<td>
+<span class="status">Preparing</span>
+</td>
+
+<td>
+
+<button class="view-btn">
+<i class="fas fa-eye"></i>
+</button>
+
+<button class="edit-btn">
+<i class="fas fa-pen"></i>
+</button>
+
+<button class="delete-btn">
+<i class="fas fa-trash"></i>
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+<!-- =====================================
+Add / Edit Placement Student Modal
+===================================== -->
+
+<div class="modal-overlay" id="placementModal">
+
+<div class="modal-card">
+
+<div class="modal-header">
+
+<h2 id="modalTitle">
+
+Add Placement Student
+
+</h2>
+
+<button class="modal-close"
+onclick="closePlacementForm()">
+
+&times;
+
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<form id="placementForm" class="student-form">
+
+<label>
+
+Register Number
+
+<input
+type="text"
+id="regNo"
+required>
+
+</label>
+
+<label>
+
+Student Name
+
+<input
+type="text"
+id="studentName"
+required>
+
+</label>
+
+<label>
+
+Company
+
+<input
+type="text"
+id="companyName">
+
+</label>
+
+<label>
+
+Role
+
+<input
+type="text"
+id="jobRole">
+
+</label>
+
+<label>
+
+Package (LPA)
+
+<input
+type="text"
+id="package">
+
+</label>
+
+<label>
+
+Status
+
+<select id="placementStatus">
+
+<option>Preparing</option>
+
+<option>Interview</option>
+
+<option>Placed</option>
+
+<option>Rejected</option>
+
+</select>
+
+</label>
+
+<div class="form-actions full-width">
+
+<button
+type="button"
+class="cancel-btn"
+onclick="closePlacementForm()">
+
+Cancel
+
+</button>
+
+<button
+type="submit"
+class="save-btn">
+
+Save Student
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<footer>
+
+<p>
+
+© 2026 Computer Science & Engineering Department Dashboard
+
+</p>
+
+</footer>
+
+<script src="../js/placements.js"></script>
+
+</body>
+
+</html>

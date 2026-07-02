@@ -1,0 +1,286 @@
+/* ==========================================
+   CSE Dashboard - dark-mode.css
+========================================== */
+
+/* 6. Smooth transition effects */
+body, 
+.sidebar, 
+.header, 
+header,
+.card, 
+.table-wrapper,
+.settings-card,
+table, 
+th, 
+td, 
+tr,
+input, 
+select, 
+textarea, 
+button, 
+.btn,
+.add-btn,
+.btn-save,
+.chatbot-container,
+.chat-container,
+.chat-box,
+.bot-message,
+.user-message,
+.chat-input,
+.chat-input input,
+.chat-input button,
+footer {
+    transition: all 0.3s ease !important;
+}
+
+/* 5. Dark Theme Overrides */
+body.dark-mode {
+    background: #121212 !important;
+    color: #ffffff !important;
+}
+
+/* Sidebar styling */
+body.dark-mode .sidebar {
+    background: #0a192f !important;
+    color: #ffffff !important;
+    border-right: 1px solid #333333 !important;
+}
+
+body.dark-mode .sidebar h2 {
+    color: #64ffda !important;
+}
+
+body.dark-mode .sidebar ul li:hover {
+    background: rgba(100, 255, 218, 0.1) !important;
+}
+
+body.dark-mode .sidebar ul li a {
+    color: #ffffff !important;
+}
+
+body.dark-mode .sidebar ul li a.active,
+body.dark-mode .sidebar ul li[style*="background"] {
+    background: #64ffda !important;
+    color: #0a192f !important;
+    border-radius: 6px;
+}
+
+body.dark-mode .sidebar ul li a.active *,
+body.dark-mode .sidebar ul li[style*="background"] a {
+    color: #0a192f !important;
+}
+
+/* Header styling */
+body.dark-mode .header,
+body.dark-mode header {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid #333333 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode .header h1,
+body.dark-mode .header h2,
+body.dark-mode .header h3,
+body.dark-mode header h1,
+body.dark-mode header h2,
+body.dark-mode header h3,
+body.dark-mode header p {
+    color: #ffffff !important;
+}
+
+body.dark-mode .section-header h1,
+body.dark-mode .section-header h2,
+body.dark-mode .section-header h3,
+body.dark-mode .section-header p {
+    color: #ffffff !important;
+}
+
+/* Cards styling */
+body.dark-mode .card,
+body.dark-mode .table-wrapper,
+body.dark-mode .settings-card,
+body.dark-mode .stats-card {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+    border: 1px solid #333333 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+body.dark-mode .card h2,
+body.dark-mode .card h3,
+body.dark-mode .card p,
+body.dark-mode .settings-card h2,
+body.dark-mode .settings-card h3 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .card p {
+    color: #64ffda !important; /* Accent color for main stats numbers */
+}
+
+/* Tables styling */
+body.dark-mode table {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode th {
+    background: #0a192f !important;
+    color: #64ffda !important;
+    border-bottom: 2px solid #333333 !important;
+}
+
+body.dark-mode td {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid #333333 !important;
+}
+
+body.dark-mode tr:hover td {
+    background: rgba(100, 255, 218, 0.05) !important;
+}
+
+/* Forms styling */
+body.dark-mode label {
+    color: #ffffff !important;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background: #121212 !important;
+    color: #ffffff !important;
+    border: 1px solid #333333 !important;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus,
+body.dark-mode textarea:focus {
+    border-color: #64ffda !important;
+    outline: none !important;
+}
+
+/* Buttons styling */
+body.dark-mode button,
+body.dark-mode .btn,
+body.dark-mode .add-btn,
+body.dark-mode .btn-save,
+body.dark-mode #export-csv {
+    background: #64ffda !important;
+    color: #0a192f !important;
+    font-weight: 600 !important;
+    border: none !important;
+}
+
+body.dark-mode button:hover,
+body.dark-mode .btn:hover,
+body.dark-mode .add-btn:hover,
+body.dark-mode .btn-save:hover,
+body.dark-mode #export-csv:hover {
+    background: #52e0c4 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(100, 255, 188, 0.2) !important;
+}
+
+/* Theme Toggle Button specific styling in Dark Mode */
+body.dark-mode #themeToggle {
+    background: #64ffda !important;
+    color: #0a192f !important;
+}
+
+/* Footer styling */
+body.dark-mode footer {
+    background: #0a192f !important;
+    color: #ffffff !important;
+    border-top: 1px solid #333333 !important;
+}
+
+/* Chatbot container overrides */
+body.dark-mode .chat-container {
+    background: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+}
+
+body.dark-mode .chat-header {
+    background: #0a192f !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid #333333 !important;
+}
+
+body.dark-mode .chat-header h2,
+body.dark-mode .chat-header p {
+    color: #ffffff !important;
+}
+
+body.dark-mode .chat-box {
+    background: #121212 !important;
+}
+
+body.dark-mode .bot-message {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+    border: 1px solid #333333 !important;
+}
+
+body.dark-mode .user-message {
+    background: #64ffda !important;
+    color: #0a192f !important;
+    font-weight: 600 !important;
+}
+
+body.dark-mode .chat-input {
+    background: #1e1e1e !important;
+    border-top: 1px solid #333333 !important;
+}
+
+body.dark-mode .chat-input input {
+    background: #121212 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .chat-input button {
+    background: #64ffda !important;
+    color: #0a192f !important;
+}
+
+/* Modals styling */
+body.dark-mode .modal-card {
+    background: #1e1e1e !important;
+    border: 1px solid #333333 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .modal-header {
+    background: #0a192f !important;
+    border-bottom: 1px solid #333333 !important;
+}
+
+body.dark-mode .modal-student-name {
+    color: #ffffff !important;
+}
+
+body.dark-mode .modal-student-reg {
+    color: #64ffda !important;
+}
+
+body.dark-mode .details-item label {
+    color: #a0aec0 !important;
+}
+
+body.dark-mode .details-item span {
+    color: #ffffff !important;
+}
+
+body.dark-mode .details-grid {
+    border-top: 1px solid #333333 !important;
+}
+
+body.dark-mode .close-btn {
+    color: #ffffff !important;
+}
+
+/* Live clock or labels text color */
+body.dark-mode #clock {
+    color: #64ffda !important;
+}

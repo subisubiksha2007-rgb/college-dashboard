@@ -1,0 +1,477 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Faculty | CSE Dashboard</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<link rel="stylesheet" href="../css/dark-mode.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../css/erp-modern.css">
+<script src="../js/darkmode.js"></script>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body{ background:#facc15; }
+.sidebar{ position:fixed; width:240px; height:100%; background:#54208f; color:#fff; padding-top:20px; }
+.sidebar h2{ text-align:center; margin-bottom:30px; }
+.sidebar ul{ list-style:none; }
+.sidebar ul li{ padding:12px 22px; }
+.sidebar ul li:hover{ background:#3d1866; }
+.sidebar ul li a{ color:#fff; text-decoration:none; display:block; }
+
+.main{ margin-left:240px; }
+
+.header{
+    background:rgba(255,255,255,0.95);
+    padding:18px 24px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.header-logo{ height:56px; width:auto; }
+
+.header h1{
+    color:#5b21b6;
+    margin:0;
+    font-size:20px;
+}
+
+.header h3{
+    color:#5b21b6;
+    margin:0;
+    font-size:13px;
+}
+
+.container{ padding:28px; }
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-header h1{
+    color:#5b21b6;
+    font-size:22px;
+}
+
+.search-box{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.search-box input{
+    flex:1;
+    padding:10px 12px;
+    border:1px solid #e6e6e6;
+    border-radius:8px;
+}
+
+.add-btn{
+    background:#54208f;
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.add-btn:hover{
+    background:#3d1866;
+}
+
+.table-wrapper{
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    overflow:hidden;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#54208f;
+    color:#fff;
+    padding:14px 16px;
+    text-align:left;
+}
+
+td{
+    padding:14px 16px;
+    border-bottom:1px solid #eee;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    background:#d1fae5;
+    color:#065f46;
+}
+
+footer{
+    background:#54208f;
+    color:#fff;
+    text-align:center;
+    padding:14px;
+    margin-top:30px;
+}
+
+/* Modal */
+
+.modal-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.modal-overlay.active{
+    display:flex;
+}
+
+.modal-card{
+    background:#fff;
+    width:500px;
+    max-width:90%;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.modal-header{
+    background:#54208f;
+    color:#fff;
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-close{
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.faculty-form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.faculty-form label{
+    display:flex;
+    flex-direction:column;
+    font-weight:bold;
+}
+
+.faculty-form input{
+    margin-top:5px;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.full-width{
+    grid-column:1 / span 2;
+}
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+.cancel-btn{
+    background:#ccc;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.save-btn{
+    background:#54208f;
+    color:#fff;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+.delete-btn{
+    background:#dc2626;
+    color:#fff;
+    border:none;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    background:#b91c1c;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>CSE Dashboard</h2>
+    <ul>
+        <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
+        <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+        <li><a href="faculty.html" class="active"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+        <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
+        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+        <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+        <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+        <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+</div>
+
+<div class="main">
+    <div class="header" style="justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 18px;">
+            <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
+            <div>
+                <h1>Faculty Management</h1>
+                <h3>Computer Science & Engineering Department</h3>
+            </div>
+        </div>
+        <button id="themeToggle" type="button" style="background: #54208f; color: #fff; border: none; padding: 10px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; outline: none;">
+            &#127769; Dark
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="section-header">
+            <h1>Faculty Details</h1>
+            <button class="add-btn" type="button" onclick="openFacultyForm()">
+    <i class="fas fa-plus"></i> Add Faculty
+</button>
+        </div>
+
+        <div class="search-box">
+         <input type="text" id="searchInput" placeholder="Search Faculty...">   
+        </div>
+
+        <div class="table-wrapper">
+            <table id="facultyTable">
+                <thead>
+                    <tr>
+                        <th>Faculty ID</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Department</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>FAC001</td>
+                      <td>Dr. Mageshwari</td>
+                      <td>Head Of The Department</td>
+                      <td>CSE</td>
+                      <td>DAA</td>
+                      <td><span class="status active">Active</span></td>
+                     <td>
+        <button class="delete-btn"
+            onclick="if(confirm('Delete this faculty?')) this.closest('tr').remove()">
+            🗑 Delete
+        </button>
+    </td>
+
+          
+                    </tr>
+                    <tr>
+                        <td>FAC002</td>
+                        <td>Dr. Revathi</td>
+                        <td>Professor</td>
+                        <td>CSE</td>
+                        <td>GQT</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+        <button class="delete-btn"
+            onclick="if(confirm('Delete this faculty?')) this.closest('tr').remove()">
+            🗑 Delete
+        </button>
+    </td>
+    </td>
+                    </tr>
+                    <tr>
+                        <td>FAC003</td>
+                        <td>Dr. Jeyanthi</td>
+                        <td>Professor</td>
+                        <td>CSE</td>
+                        <td>OE-1</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+        <button class="delete-btn"
+            onclick="if(confirm('Delete this faculty?')) this.closest('tr').remove()">
+            🗑 Delete
+        </button>
+    </td>
+                    </tr>
+                    <tr>
+                        <td>FAC004</td>
+                        <td>Dr. Govindaraj</td>
+                        <td>Professor</td>
+                        <td>CSE</td>
+                        <td>DBMS</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+        <button class="delete-btn"
+            onclick="if(confirm('Delete this faculty?')) this.closest('tr').remove()">
+            🗑 Delete
+        </button>
+    </td>
+                    </tr>
+                    <tr>
+                        <td>FAC005</td>
+                        <td>Mrs. Jeya Geetha</td>
+                        <td>Professor</td>
+                        <td>CSE</td>
+                        <td>AIML</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+        <button class="delete-btn"
+            onclick="if(confirm('Delete this faculty?')) this.closest('tr').remove()">
+            🗑 Delete
+        </button>
+    </td>
+                    </tr>
+                    <tr>
+                        <td>FAC006</td>
+                        <td>Mrs. swathi</td>
+                        <td>Professor</td>
+                        <td>CSE</td>
+                        <td>OS</td>
+                        <td><span class="status active">Active</span></td>
+                        <td>
+        <button class="delete-btn"
+            onclick="if(confirm('Delete this faculty?')) this.closest('tr').remove()">
+            🗑 Delete
+        </button>
+    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Faculty Modal -->
+<div class="modal-overlay" id="facultyFormModal" onclick="closeFacultyForm()">
+
+    <div class="modal-card" onclick="event.stopPropagation()">
+
+        <div class="modal-header">
+            <h2 id="facultyFormTitle">Add Faculty</h2>
+            <button type="button" class="modal-close" onclick="closeFacultyForm()">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+            <form id="facultyForm" class="faculty-form">
+
+                <label>
+                    Faculty ID
+                    <input type="text" id="form-id" required>
+                </label>
+
+                <label>
+                    Faculty Name
+                    <input type="text" id="form-name" required>
+                </label>
+
+                <label>
+                    Department
+                    <input type="text" id="form-dept" value="CSE" required>
+                </label>
+
+                <label>
+                    Designation
+                    <input type="text" id="form-designation" placeholder="Professor" required>
+                </label>
+
+                <label>
+                    Subject
+                    <input type="text" id="form-subject" placeholder="DBMS" required>
+                </label>
+
+                <label>
+                    Phone
+                    <input type="text" id="form-phone" placeholder="+91 98765 43210">
+                </label>
+
+                <label class="full-width">
+                    Email Address
+                    <input type="email" id="form-email" placeholder="faculty@example.com">
+                </label>
+
+                <label class="full-width">
+                    Photo URL or Relative Path
+                    <input type="text" id="form-photo" placeholder="../assets/faculty/photo.jpg">
+                </label>
+
+                <div class="form-actions full-width">
+                    <button type="button" class="cancel-btn" onclick="closeFacultyForm()">Cancel</button>
+                    <button type="submit" class="save-btn">Save Faculty</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<footer>
+    <p>&copy; 2026 Computer Science & Engineering Department Dashboard</p>
+</footer>
+
+
+</div>
+
+<script>
+const pageType="faculty";
+</script>
+
+<script src="../js/app.js"></script>
+
+<script src="../js/faculty.js"></script>
+
+</body>
+</html>

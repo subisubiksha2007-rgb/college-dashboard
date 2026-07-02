@@ -1,0 +1,316 @@
+/* ===========================
+    CSE Dashboard - style.css
+=========================== */
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+:root{
+    --bg: #f7f6fb;
+    --purple-600: #5b21b6;
+    --purple-500: #7c3aed;
+    --purple-700: #4c1d95;
+    --yellow-400: #facc15;
+    --yellow-500: #f59e0b;
+    --text-dark: #000000;
+    --muted: rgba(0,0,0,0.6);
+}
+
+body{
+    background:var(--bg);
+    color:var(--text-dark);
+}
+
+/* Links */
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* Buttons */
+
+.btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:var(--yellow-400);
+    color:var(--text-dark);
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.15s ease;
+}
+
+.btn:hover{
+    background:var(--yellow-500);
+    transform:translateY(-2px);
+}
+
+/* Cards */
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+/* Tables */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+}
+
+table th{
+    background:var(--purple-600);
+    color:#fff;
+    padding:14px;
+}
+
+table td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+table tr:hover{
+    background: rgba(124,58,237,0.04);
+}
+
+/* Sidebar + layout adjustments for single-file pages */
+
+.sidebar{
+    position:fixed;
+    width:240px;
+    height:100%;
+    background:var(--purple-600);
+    color:#fff;
+    padding-top:20px;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.sidebar ul{ list-style:none }
+
+.sidebar ul li{ padding:10px 18px }
+
+.sidebar ul li:hover{ background:var(--purple-700); }
+
+.sidebar ul li a{ color:#fff; text-decoration:none; display:block }
+
+.sidebar ul li a.active{ background:var(--purple-500); color:#fff }
+
+.main-content{ margin-left:260px; padding:28px }
+
+/* Export CSV button tweaks */
+#export-csv{ margin-bottom:12px }
+
+/* Forms */
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    margin:8px 0 15px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#facc15;
+}
+
+/* Header */
+
+header{
+    background:#7c3aed;
+    color:white;
+    padding:15px 30px;
+}
+
+/* Footer */
+
+footer{
+    background:#7c3aed;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:30px;
+}
+
+/* Utility Classes */
+
+.text-center{
+    text-align:center;
+}
+
+.mt-20{
+    margin-top:20px;
+}
+
+.mt-30{
+    margin-top:30px;
+}
+
+.mb-20{
+    margin-bottom:20px;
+}
+
+.container{
+    width:90%;
+    margin:auto;
+}
+
+/* ==========================================
+   Light Mode Overrides (Change text to Black)
+========================================== */
+.header h1, .header h2, .header h3,
+.section-header h1, .section-header h2, .section-header h3,
+.card h3, .card p, .table-section h2, label, td {
+    color: #000000 !important;
+}
+th {
+    color: #ffffff !important; /* Keep table headers white text */
+}
+.sidebar h2, .sidebar ul li a {
+    color: #ffffff !important; /* Keep sidebar text white */
+}
+
+/* ==========================================
+   Dark Mode Overrides
+========================================== */
+body.dark-mode {
+    background: #000000 !important; /* Pure Black background */
+    color: #f8fafc !important;
+}
+body.dark-mode .sidebar {
+    background: #1e1b4b !important; /* Dark indigo sidebar */
+}
+body.dark-mode .sidebar ul li:hover {
+    background: #312e81 !important;
+}
+body.dark-mode .sidebar ul li a.active, 
+body.dark-mode .sidebar ul li[style*="background"] {
+    background: #312e81 !important;
+}
+body.dark-mode .header {
+    background: rgba(30, 41, 59, 0.95) !important; /* Dark header */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    border-bottom: 1px solid #334155 !important;
+}
+body.dark-mode .header h1 {
+    color: #ffffff !important;
+}
+body.dark-mode .header h3 {
+    color: #cbd5e1 !important;
+}
+body.dark-mode .section-header h1 {
+    color: #ffffff !important;
+}
+body.dark-mode .card,
+body.dark-mode .table-wrapper,
+body.dark-mode .settings-card {
+    background: #1e293b !important; /* Slate-800 card */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2) !important;
+    color: #f8fafc !important;
+}
+body.dark-mode .card h3 {
+    color: #facc15 !important;
+}
+body.dark-mode .card p {
+    color: #e2e8f0 !important;
+}
+body.dark-mode table {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+body.dark-mode th {
+    background: #1e1b4b !important;
+    color: #ffffff !important;
+}
+body.dark-mode td {
+    border-bottom: 1px solid #334155 !important;
+    color: #e2e8f0 !important;
+}
+body.dark-mode tr:hover {
+    background: #334155 !important;
+}
+body.dark-mode footer {
+    background: #1e1b4b !important;
+    color: #cbd5e1 !important;
+}
+body.dark-mode input, 
+body.dark-mode select, 
+body.dark-mode textarea {
+    background: #334155 !important;
+    border-color: #475569 !important;
+    color: #ffffff !important;
+}
+body.dark-mode .add-btn,
+body.dark-mode .btn-save {
+    background: #312e81 !important;
+    color: #ffffff !important;
+}
+body.dark-mode .add-btn:hover,
+body.dark-mode .btn-save:hover {
+    background: #4338ca !important;
+}
+body.dark-mode .modal-card {
+    background: #1e293b !important;
+    color: #f8fafc !important;
+}
+body.dark-mode .modal-header {
+    background: #1e1b4b !important;
+}
+body.dark-mode .modal-student-name {
+    color: #ffffff !important;
+}
+body.dark-mode .modal-student-reg {
+    color: #facc15 !important;
+}
+body.dark-mode .details-item label {
+    color: #94a3b8 !important;
+}
+body.dark-mode .details-item span {
+    color: #e2e8f0 !important;
+}
+body.dark-mode .details-grid {
+    border-top: 1px solid #334155 !important;
+}
+body.dark-mode label {
+    color: #cbd5e1 !important;
+}
+body.dark-mode .table-section h2 {
+    color: #ffffff !important;
+}
+
+/* Custom Text Selection Highlight */
+::selection {
+    background: #54208f !important;
+    color: #ffffff !important;
+}
+::-moz-selection {
+    background: #54208f !important;
+    color: #ffffff !important;
+}

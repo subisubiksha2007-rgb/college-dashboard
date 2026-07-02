@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE Dashboard | Login</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:linear-gradient(135deg,#140f2f,#5b21b6);
+        }
+
+        .login-box{
+            width:380px;
+            background:#facc15;
+            padding:40px;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.3);
+            text-align:center;
+        }
+
+        .login-box h1{
+            color:#000000;
+            margin-bottom:10px;
+        }
+
+        .login-box p{
+            color:#555;
+            margin-bottom:25px;
+        }
+
+        .input-box{
+            margin-bottom:20px;
+            text-align:left;
+        }
+
+        .input-box label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:bold;
+        }
+
+        .input-box input{
+            width:100%;
+            padding:12px;
+            border:1px solid #361550;
+            border-radius:8px;
+            outline:none;
+            font-size:15px;
+        }
+
+        .input-box input:focus{
+            border-color:#facc15;
+        }
+
+        .btn{
+            width:100%;
+            padding:12px;
+            background:#c4b5fd;
+            color:#1f1b34;
+            border:none;
+            border-radius:8px;
+            font-size:17px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#b197fc;
+        }
+
+        .message{
+            margin-bottom:16px;
+            color:#b91c1c;
+            font-weight:600;
+            text-align:left;
+        }
+
+        .links{
+            margin-top:20px;
+        }
+
+        .links a{
+            text-decoration:none;
+            color:#facc15;
+        }
+
+        .links a:hover{
+            text-decoration:underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>CSE Dashboard</h1>
+
+<p>Press login to continue</p>
+
+<form id="loginForm" action="#">
+
+<div class="input-box">
+<label for="username">Username</label>
+<input id="username" name="username" type="text" placeholder="Enter Username" required>
+</div>
+
+<div class="input-box">
+<label for="password">Password</label>
+<input id="password" name="password" type="password" placeholder="Enter Password" required>
+</div>
+
+<div class="message" id="loginMessage"></div>
+
+<button class="btn" type="submit">
+Continue
+</button>
+
+<div class="links">
+<p><a href="#">Forgot Password?</a></p>
+<p><a href="index.html">← Back to Home</a></p>
+</div>
+
+</form>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginForm = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+
+        if (!loginForm) return;
+
+        loginForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            loginMessage.textContent = '';
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                loginMessage.textContent = 'Please enter both username and password.';
+                return;
+            }
+
+            if (username === 'subiksha' && password === '2007') {
+                window.location.href = 'dashboard.html';
+            } else {
+                loginMessage.textContent = 'Invalid username or password.';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

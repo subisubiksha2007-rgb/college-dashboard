@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatbot | CSE Dashboard</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dark-mode.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../css/erp-modern.css">
+<script src="../js/darkmode.js"></script>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body{ background:#facc15; }
+.sidebar{ position:fixed; width:240px; height:100%; background:#54208f; color:#fff; padding-top:20px; }
+.sidebar h2{ text-align:center; margin-bottom:30px; }
+.sidebar ul{ list-style:none; }
+.sidebar ul li{ padding:12px 22px; }
+.sidebar ul li:hover{ background:#3d1866; }
+.sidebar ul li a{ color:#fff; text-decoration:none; display:block; }
+.main{ margin-left:240px; }
+.header{ background:rgba(255,255,255,0.95); padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:18px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.header-logo{ height:56px; width:auto; }
+.header h1{ color:#5b21b6; font-size:20px; }
+.header h3{ color:#5b21b6; font-size:13px; }
+.container{ padding:28px; }
+.section-header h1{ color:#5b21b6; margin-bottom:20px; }
+.chat-container{ width:100%; max-width:900px; margin:auto; background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); overflow:hidden; display:flex; flex-direction:column; height:600px; }
+.chat-header{ background:#54208f; color:white; padding:20px; text-align:center; }
+.chat-box{ flex:1; overflow-y:auto; padding:20px; background:#f9f9f9; }
+.bot-message{ background:#e9ecef; padding:12px 16px; border-radius:10px; margin-bottom:15px; max-width:70%; line-height:1.45; }
+.user-message{ background:#54208f; color:white; padding:12px 16px; border-radius:10px; margin-bottom:15px; margin-left:auto; max-width:70%; line-height:1.45; }
+.chat-input{ display:flex; border-top:1px solid #ddd; }
+.chat-input input{ flex:1; padding:15px; border:none; outline:none; }
+.chat-input button{ width:120px; border:none; background:#54208f; color:white; cursor:pointer; font-weight:700; }
+.chat-input button:hover{ background:#3d1866; }
+        <button id="themeToggle" type="button">&#127769; Dark</button>
+footer{ background:#54208f; color:white; text-align:center; padding:14px; }
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>CSE Dashboard</h2>
+    <ul>
+        <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
+        <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+        <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+        <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
+        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+        <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+        <li><a href="chatbot.html" class="active"><i class="fas fa-robot"></i> Chatbot</a></li>
+        <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+</div>
+
+<div class="main">
+    <div class="header">
+        <div style="display:flex; align-items:center; gap:18px;">
+            <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="University Logo" class="header-logo">
+            <div>
+                <h1>AI Assistant</h1>
+                <h3>Computer Science & Engineering Department</h3>
+            </div>
+        </div>
+        <button id="themeToggle" type="button">&#127769; Dark</button>
+    </div>
+
+    <div class="container">
+        <div class="section-header">
+            <h1>CSE AI Chatbot</h1>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>CSE AI Assistant</h2>
+                <p>Ask anything about the department</p>
+            </div>
+
+            <div class="chat-box" id="chatBox">
+                <div class="bot-message">
+                    Hello! I'm your CSE AI Assistant.<br><br>
+                    Try asking:<br><br>
+                    &bull; What is DBMS?<br>
+                    &bull; Who is HOD?<br>
+                    &bull; Show Attendance<br>
+                    &bull; Show Students<br>
+                    &bull; Show Faculty<br>
+                    &bull; Show Placements<br>
+                    &bull; Show Events<br>
+                    &bull; Show Notices
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Ask me anything...">
+                <button type="button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 CSE Dashboard. All rights reserved.
+</footer>
+
+<script src="../js/chatbot.js"></script>
+
+</body>
+</html>

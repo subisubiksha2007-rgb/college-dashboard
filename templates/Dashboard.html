@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE Department Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../css/erp-modern.css">
+    <script src="../js/darkmode.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #facc15;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100%;
+            background: #54208f;
+            color: rgb(255, 255, 255);
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 15px 25px;
+        }
+
+        .sidebar ul li:hover {
+            background: #3d1866;
+        }
+
+        .sidebar ul li a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            display: block;
+        }
+
+        .main {
+            margin-left: 240px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-logo {
+            height: 56px;
+            width: auto;
+        }
+
+        .header h1 {
+            color: #5b21b6;
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .header h3 {
+            color: #5b21b6;
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            color: #5b21b6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .card p {
+            font-size: 32px;
+            font-weight: bold;
+            color: #54208f;
+        }
+
+        .table-section {
+            padding: 30px;
+        }
+
+        .table-section h2 {
+            color: #5b21b6;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: #54208f;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        footer {
+            background: #54208f;
+            color: #fff;
+            text-align: center;
+            padding: 14px;
+            margin-top: 30px
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+    <h2>CSE Dashboard</h2>
+    <ul>
+        <li><a href="dashboard.html" class="active"><i class="fas fa-house"></i> Dashboard</a></li>
+        <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+        <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+        <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
+        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+        <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+        <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+        <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+</div>
+
+<div class="main">
+
+        <div class="header" style="justify-content: space-between; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 18px;">
+                <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png"
+                    alt="St. Joseph University" class="header-logo">
+                <div>
+                    <h1>Welcome, Admin</h1>
+                    <h3>Computer Science & Engineering Department</h3>
+                </div>
+            </div>
+            <button id="themeToggle" type="button"
+                style="background: #54208f; color: #fff; border: none; padding: 10px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; outline: none;">
+                &#127769; Dark
+            </button>
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Students</h3>
+                <p>7</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Faculty</h3>
+                <p>35</p>
+            </div>
+
+            <div class="card">
+                <h3>Courses</h3>
+                <p>18</p>
+            </div>
+
+            <div class="card">
+                <h3>Placement Rate</h3>
+                <p>92%</p>
+            </div>
+
+            <div class="card">
+                <h3>Projects</h3>
+                <p>76</p>
+            </div>
+
+            <div class="card">
+                <h3>Events</h3>
+                <p>12</p>
+            </div>
+
+        </div>
+
+        <div class="table-section">
+
+            <h2 style="margin-bottom:20px;">Recent Notices</h2>
+
+            <table>
+
+                <tr>
+                    <th>Date</th>
+                    <th>Notice</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <td>10-06-2026</td>
+                    <td>Internal Exam Schedule Released</td>
+                    <td>Active</td>
+                </tr>
+
+                <tr>
+                    <td>15-06-2026</td>
+                    <td>Hackathon Registration Open</td>
+                    <td>Open</td>
+                </tr>
+
+                <tr>
+                    <td>20-06-2026</td>
+                    <td>Campus Placement Drive</td>
+                    <td>Upcoming</td>
+                </tr>
+
+                <tr>
+                    <td>25-06-2026</td>
+                    <td>Project Review Meeting</td>
+                    <td>Scheduled</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 CSE Dashboard. All rights reserved.
+    </footer>
+
+</body>
+
+</html>

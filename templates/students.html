@@ -1,0 +1,725 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Students | CSE Dashboard</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<link rel="stylesheet" href="../css/dark-mode.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../css/erp-modern.css">
+<script src="../js/darkmode.js"></script>
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+body{ background:#facc15; }
+.sidebar{ position:fixed; width:240px; height:100%; background:#54208f; color:#fff; padding-top:20px }
+.sidebar h2{ text-align:center; margin-bottom:30px }
+.sidebar ul{ list-style:none }
+.sidebar ul li{ padding:12px 22px }
+.sidebar ul li:hover{ background:#3d1866 }
+.sidebar ul li a{ color:#fff; text-decoration:none; display:block }
+.main{ margin-left:240px }
+.header{ background:rgba(255,255,255,0.95); padding:18px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 2px 8px rgba(0,0,0,0.06) }
+.header-logo{ height:56px; width:auto }
+.header h1{ color:#5b21b6; margin:0; font-size:20px }
+.header h3{ color:#5b21b6; margin:0; font-size:13px }
+.container{ padding:28px }
+.section-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px }
+.section-header h1{ color:#5b21b6; font-size:22px }
+.search-box{ display:flex; gap:12px; align-items:center; margin-bottom:18px }
+.search-box input{ flex:1; padding:10px 12px; border:1px solid #e6e6e6; border-radius:8px }
+.add-btn{ background:#54208f; color:#fff; border:none; padding:10px 18px; border-radius:8px; cursor:pointer }
+.add-btn:hover{ background:#3d1866 }
+.edit-btn{ background:#facc15; color:#3d1866; border:none; padding:9px 16px; border-radius:8px; cursor:pointer; font-weight:700; margin-top:18px }
+.form-actions{ display:flex; justify-content:flex-end; gap:12px; margin-top:22px }
+.form-actions button{ border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:700 }
+.cancel-btn{ background:#e5e7eb; color:#1f2937 }
+.save-btn{ background:#54208f; color:#fff }
+.student-form{ display:grid; grid-template-columns:1fr 1fr; gap:14px; text-align:left }
+.student-form label{ display:flex; flex-direction:column; gap:6px; color:#4c1d95; font-size:13px; font-weight:700 }
+.student-form input{ border:1px solid #ddd; border-radius:8px; padding:10px 12px; font-size:14px }
+.student-form .full-width{ grid-column:span 2 }
+.table-wrapper{ background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); overflow:hidden }
+table{ width:100%; border-collapse:collapse }
+th{ background:#54208f; color:#fff; padding:14px 16px; text-align:left; font-weight:600 }
+td{ padding:14px 16px; border-bottom:1px solid #f0f0f0 }
+tr:hover{ background:#fafafa }
+.student-photo{ width:52px; height:52px; border-radius:50%; object-fit:cover; border:3px solid #facc15; box-shadow:0 2px 8px rgba(0,0,0,0.12); display:block }
+.status{ display:inline-block; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600 }
+.status.active{ background:#d1fae5; color:#065f46 }
+footer{ background:#54208f; color:#fff; text-align:center; padding:14px; margin-top:30px }
+
+/* Modal styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+.modal-overlay.active {
+    display: flex;
+}
+.modal-card {
+    background: #ffffff;
+    width: 480px;
+    max-width: 90%;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.modal-header {
+    background: #54208f;
+    color: #ffffff;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+.modal-close {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    transition: opacity 0.2s;
+}
+.modal-close:hover {
+    opacity: 0.8;
+}
+.modal-body {
+    padding: 28px;
+    text-align: center;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.modal-avatar-container {
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+.modal-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #facc15;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.modal-student-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f1b34;
+    margin-bottom: 4px;
+}
+.modal-student-reg {
+    font-size: 14px;
+    color: #7c3aed;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    text-align: left;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 24px;
+}
+.details-item {
+    display: flex;
+    flex-direction: column;
+}
+.details-item label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #7c3aed;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+}
+.details-item span {
+    font-size: 15px;
+    color: #333333;
+    font-weight: 600;
+}
+.details-item.full-width {
+    grid-column: span 2;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>CSE Dashboard</h2>
+    <ul>
+        <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
+        <li><a href="students.html" class="active"><i class="fas fa-user-graduate"></i> Students</a></li>
+        <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+        <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
+        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+        <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+        <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+        <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+</div>
+
+<div class="main">
+  <div class="header" style="justify-content: space-between; width: 100%;">
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
+      <div>
+        <h1>Student Management</h1>
+        <h3>Computer Science & Engineering Department</h3>
+      </div>
+    </div>
+    <button id="themeToggle" type="button" style="background: #54208f; color: #fff; border: none; padding: 10px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; outline: none;">
+        &#127769; Dark
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="section-header">
+      <h1>Students List</h1>
+      <button class="add-btn" type="button" onclick="openStudentForm()">+ Add Student</button>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder=" Search Student by name, reg no, or status..." onkeyup="searchStudent()">
+    </div>
+
+    <div class="table-wrapper">
+      <table id="studentTable">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Reg. No</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Year</th>
+            <th>CGPA</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101001"
+              data-name="Hari Prakash"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="8.7"
+              data-attendance="92%"
+              data-email="hari.prakash@example.com"
+              data-phone="+91 98765 43210"
+              data-photo="../assets/students/hari-prakash.jpeg">
+            <td><img class="student-photo" src="../assets/students/hari-prakash.jpeg" alt="Hari Prakash"></td>
+            <td>240310101001</td>
+            <td>Hari Prakash</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>8.7</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101002"
+              data-name="Lokeshwaran"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="8.8"
+              data-attendance="95%"
+              data-email="lokeshwaran@example.com"
+              data-phone="+91 98765 43211"
+              data-photo="../assets/students/lokeshwaran.jpeg">
+            <td><img class="student-photo" src="../assets/students/lokeshwaran.jpeg" alt="Lokeshwaran"></td>
+            <td>240310101002</td>
+            <td>Lokeshwaran</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>8.8</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101003"
+              data-name="Lorin"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="9.1"
+              data-attendance="98%"
+              data-email="lorin@example.com"
+              data-phone="+91 98765 43212"
+              data-photo="../assets/students/lorin.jpeg">
+            <td><img class="student-photo" src="../assets/students/lorin.jpeg" alt="Lorin"></td>
+            <td>240310101003</td>
+            <td>Lorin</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>9.1</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101004"
+              data-name="Meenakshi"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="9.0"
+              data-attendance="94%"
+              data-email="meenakshi@example.com"
+              data-phone="+91 98765 43213"
+              data-photo="../assets/students/meenakshi.jpg">
+            <td><img class="student-photo" src="../assets/students/meenakshi.jpg" alt="Meenakshi"></td>
+            <td>240310101004</td>
+            <td>Meenakshi</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>9.0</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101005"
+              data-name="Satish Kumar"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="8.6"
+              data-attendance="90%"
+              data-email="satish.kumar@example.com"
+              data-phone="+91 98765 43214"
+              data-photo="../assets/students/satish-kumar.jpeg">
+            <td><img class="student-photo" src="../assets/students/satish-kumar.jpeg" alt="Satish Kumar"></td>
+            <td>240310101005</td>
+            <td>Satish Kumar</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>8.6</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101006"
+              data-name="Subiksha"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="9.2"
+              data-attendance="97%"
+              data-email="subiksha@example.com"
+              data-phone="+91 98765 43215"
+              data-photo="../assets/students/subiksha.png">
+            <td><img class="student-photo" src="../assets/students/subiksha.png" alt="Subiksha"></td>
+            <td>240310101006</td>
+            <td>Subiksha</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>9.2</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          <tr onclick="openStudentModal(this)" style="cursor: pointer;"
+              data-reg="240310101007"
+              data-name="Varalakshmi"
+              data-dept="CSE"
+              data-year="3rd Year"
+              data-sem="6th Semester"
+              data-cgpa="8.9"
+              data-attendance="93%"
+              data-email="varalakshmi@example.com"
+              data-phone="+91 98765 43216"
+              data-photo="../assets/students/varalakshmi.jpg">
+            <td><img class="student-photo" src="../assets/students/varalakshmi.jpg" alt="Varalakshmi"></td>
+            <td>240310101007</td>
+            <td>Varalakshmi</td>
+            <td>CSE</td>
+            <td>3rd Year</td>
+            <td>8.9</td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Student Details Modal -->
+<div class="modal-overlay" id="studentModal" onclick="closeStudentModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Student Profile</h2>
+      <button class="modal-close" onclick="closeStudentModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-avatar-container">
+        <img id="detail-photo" class="modal-avatar" src="" alt="Student Photo">
+      </div>
+      <div class="modal-student-name" id="detail-name">Student Name</div>
+      <div class="modal-student-reg" id="detail-reg">Register No</div>
+      
+      <div class="details-grid">
+        <div class="details-item">
+          <label>Department</label>
+          <span id="detail-dept">N/A</span>
+        </div>
+        <div class="details-item">
+          <label>Year</label>
+          <span id="detail-year">N/A</span>
+        </div>
+        <div class="details-item">
+          <label>Semester</label>
+          <span id="detail-sem">N/A</span>
+        </div>
+        <div class="details-item">
+          <label>CGPA</label>
+          <span id="detail-cgpa">N/A</span>
+        </div>
+        <div class="details-item">
+          <label>Attendance</label>
+          <span id="detail-attendance">N/A</span>
+        </div>
+        <div class="details-item">
+          <label>Phone</label>
+          <span id="detail-phone">N/A</span>
+        </div>
+        <div class="details-item full-width">
+          <label>Email Address</label>
+          <span id="detail-email">N/A</span>
+        </div>
+      </div>
+      <button class="edit-btn" type="button" onclick="editCurrentStudent()">Edit Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add / Edit Student Modal -->
+<div class="modal-overlay" id="studentFormModal" onclick="closeStudentForm(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2 id="studentFormTitle">Add Student</h2>
+      <button class="modal-close" onclick="closeStudentForm()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="studentForm" class="student-form">
+        <label>Register No
+          <input id="form-reg" name="reg" required>
+        </label>
+        <label>Name
+          <input id="form-name" name="name" required>
+        </label>
+        <label>Department
+          <input id="form-dept" name="dept" value="CSE" required>
+        </label>
+        <label>Year
+          <input id="form-year" name="year" placeholder="3rd Year" required>
+        </label>
+        <label>Semester
+          <input id="form-sem" name="sem" placeholder="6th Semester" required>
+        </label>
+        <label>CGPA
+          <input id="form-cgpa" name="cgpa" placeholder="8.5" required>
+        </label>
+        <label>Attendance
+          <input id="form-attendance" name="attendance" placeholder="95%" required>
+        </label>
+        <label>Phone
+          <input id="form-phone" name="phone" placeholder="+91 98765 43210">
+        </label>
+        <label class="full-width">Email Address
+          <input id="form-email" name="email" type="email" placeholder="student@example.com">
+        </label>
+        <label class="full-width">Photo URL or relative path
+          <input id="form-photo" name="photo" placeholder="../assets/students/photo.jpeg">
+        </label>
+        <div class="form-actions full-width">
+          <button class="cancel-btn" type="button" onclick="closeStudentForm()">Cancel</button>
+          <button class="save-btn" type="submit">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Computer Science & Engineering Department Dashboard</p>
+</footer>
+
+<script src="../js/app.js"></script>
+<script src="../js/crud.js"></script>
+
+<script>
+const STUDENTS_STORAGE_KEY = 'dashboardStudents';
+let currentStudentReg = null;
+let editingStudentReg = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadSavedStudents();
+  const form = document.getElementById('studentForm');
+  if (form) {
+    form.addEventListener('submit', saveStudentFromForm);
+  }
+});
+
+function searchStudent() {
+  const input = document.getElementById('searchInput');
+  const table = document.getElementById('studentTable');
+  if (!input || !table) return;
+
+  const filter = input.value.trim().toUpperCase();
+  const rows = table.querySelectorAll('tbody tr');
+
+  rows.forEach(row => {
+    const cells = row.getElementsByTagName('td');
+    if (cells.length < 3) return;
+
+    const regNo = cells[1].textContent || '';
+    const name = cells[2].textContent || '';
+    const dept = cells[3] ? (cells[3].textContent || '') : '';
+    const status = cells[6] ? (cells[6].textContent || '') : '';
+
+    const combinedText = `${regNo} ${name} ${dept} ${status}`.toUpperCase();
+
+    if (combinedText.indexOf(filter) > -1) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
+
+function getStudentsFromTable() {
+  const rows = document.querySelectorAll('#studentTable tbody tr');
+  return Array.from(rows).map(row => ({
+    reg: row.getAttribute('data-reg') || '',
+    name: row.getAttribute('data-name') || '',
+    dept: row.getAttribute('data-dept') || '',
+    year: row.getAttribute('data-year') || '',
+    sem: row.getAttribute('data-sem') || '',
+    cgpa: row.getAttribute('data-cgpa') || '',
+    attendance: row.getAttribute('data-attendance') || '',
+    email: row.getAttribute('data-email') || '',
+    phone: row.getAttribute('data-phone') || '',
+    photo: row.getAttribute('data-photo') || ''
+  }));
+}
+
+function saveStudentsToStorage() {
+  localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(getStudentsFromTable()));
+}
+
+function loadSavedStudents() {
+  const saved = localStorage.getItem(STUDENTS_STORAGE_KEY);
+  if (!saved) {
+    saveStudentsToStorage();
+    return;
+  }
+
+  try {
+    const students = JSON.parse(saved);
+    const tbody = document.querySelector('#studentTable tbody');
+    if (!Array.isArray(students) || !tbody) return;
+    tbody.innerHTML = '';
+    students.forEach(student => tbody.appendChild(createStudentRow(student)));
+  } catch (error) {
+    console.error('Could not load saved students', error);
+  }
+}
+
+function createStudentRow(student) {
+  const row = document.createElement('tr');
+  row.style.cursor = 'pointer';
+  row.onclick = function() {
+    openStudentModal(row);
+  };
+  updateRowData(row, student);
+  return row;
+}
+
+function updateRowData(row, student) {
+  const photo = student.photo || getAvatarUrl(student.name);
+  row.setAttribute('data-reg', student.reg || '');
+  row.setAttribute('data-name', student.name || '');
+  row.setAttribute('data-dept', student.dept || 'CSE');
+  row.setAttribute('data-year', student.year || '');
+  row.setAttribute('data-sem', student.sem || '');
+  row.setAttribute('data-cgpa', student.cgpa || '');
+  row.setAttribute('data-attendance', student.attendance || '');
+  row.setAttribute('data-email', student.email || '');
+  row.setAttribute('data-phone', student.phone || '');
+  row.setAttribute('data-photo', photo);
+  row.innerHTML = `
+    <td><img class="student-photo" src="${escapeAttribute(photo)}" alt="${escapeAttribute(student.name || 'Student')}"></td>
+    <td>${escapeHtml(student.reg || '')}</td>
+    <td>${escapeHtml(student.name || '')}</td>
+    <td>${escapeHtml(student.dept || 'CSE')}</td>
+    <td>${escapeHtml(student.year || '')}</td>
+    <td>${escapeHtml(student.cgpa || '')}</td>
+    <td><span class="status active">Active</span></td>
+  `;
+}
+
+function openStudentForm(student) {
+  editingStudentReg = student ? student.reg : null;
+  document.getElementById('studentFormTitle').textContent = student ? 'Edit Student' : 'Add Student';
+  document.getElementById('form-reg').value = student ? student.reg : '';
+  document.getElementById('form-name').value = student ? student.name : '';
+  document.getElementById('form-dept').value = student ? student.dept : 'CSE';
+  document.getElementById('form-year').value = student ? student.year : '';
+  document.getElementById('form-sem').value = student ? student.sem : '';
+  document.getElementById('form-cgpa').value = student ? student.cgpa : '';
+  document.getElementById('form-attendance').value = student ? student.attendance : '';
+  document.getElementById('form-phone').value = student ? student.phone : '';
+  document.getElementById('form-email').value = student ? student.email : '';
+  document.getElementById('form-photo').value = student ? student.photo : '';
+  document.getElementById('studentFormModal').classList.add('active');
+}
+
+function closeStudentForm(event) {
+  const modal = document.getElementById('studentFormModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+}
+
+function saveStudentFromForm(event) {
+  event.preventDefault();
+  const student = {
+    reg: document.getElementById('form-reg').value.trim(),
+    name: document.getElementById('form-name').value.trim(),
+    dept: document.getElementById('form-dept').value.trim(),
+    year: document.getElementById('form-year').value.trim(),
+    sem: document.getElementById('form-sem').value.trim(),
+    cgpa: document.getElementById('form-cgpa').value.trim(),
+    attendance: document.getElementById('form-attendance').value.trim(),
+    phone: document.getElementById('form-phone').value.trim(),
+    email: document.getElementById('form-email').value.trim(),
+    photo: document.getElementById('form-photo').value.trim()
+  };
+
+  const tbody = document.querySelector('#studentTable tbody');
+  let row = editingStudentReg
+    ? document.querySelector(`#studentTable tbody tr[data-reg="${cssEscape(editingStudentReg)}"]`)
+    : null;
+
+  if (!row) {
+    row = createStudentRow(student);
+    tbody.appendChild(row);
+  } else {
+    updateRowData(row, student);
+  }
+
+  saveStudentsToStorage();
+  closeStudentForm();
+  openStudentModal(row);
+}
+
+function editCurrentStudent() {
+  const row = document.querySelector(`#studentTable tbody tr[data-reg="${cssEscape(currentStudentReg)}"]`);
+  if (!row) return;
+  closeStudentModal();
+  openStudentForm({
+    reg: row.getAttribute('data-reg') || '',
+    name: row.getAttribute('data-name') || '',
+    dept: row.getAttribute('data-dept') || '',
+    year: row.getAttribute('data-year') || '',
+    sem: row.getAttribute('data-sem') || '',
+    cgpa: row.getAttribute('data-cgpa') || '',
+    attendance: row.getAttribute('data-attendance') || '',
+    email: row.getAttribute('data-email') || '',
+    phone: row.getAttribute('data-phone') || '',
+    photo: row.getAttribute('data-photo') || ''
+  });
+}
+
+function openStudentModal(row) {
+  const modal = document.getElementById('studentModal');
+  if (!modal) return;
+  currentStudentReg = row.getAttribute('data-reg') || null;
+
+  // Set detail elements
+  document.getElementById('detail-photo').src = row.getAttribute('data-photo') || '';
+  document.getElementById('detail-name').textContent = row.getAttribute('data-name') || 'N/A';
+  document.getElementById('detail-reg').textContent = row.getAttribute('data-reg') || 'N/A';
+  document.getElementById('detail-dept').textContent = row.getAttribute('data-dept') || 'N/A';
+  document.getElementById('detail-year').textContent = row.getAttribute('data-year') || 'N/A';
+  document.getElementById('detail-sem').textContent = row.getAttribute('data-sem') || 'N/A';
+  document.getElementById('detail-cgpa').textContent = row.getAttribute('data-cgpa') || 'N/A';
+  document.getElementById('detail-attendance').textContent = row.getAttribute('data-attendance') || 'N/A';
+  document.getElementById('detail-phone').textContent = row.getAttribute('data-phone') || 'N/A';
+  document.getElementById('detail-email').textContent = row.getAttribute('data-email') || 'N/A';
+
+  // Show modal
+  modal.classList.add('active');
+}
+
+function closeStudentModal(event) {
+  const modal = document.getElementById('studentModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+}
+
+// Allow closing with Escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    closeStudentModal();
+    closeStudentForm();
+  }
+});
+
+function getAvatarUrl(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'Student')}&background=54208f&color=fff&size=128`;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replace(/`/g, '&#096;');
+}
+
+function cssEscape(value) {
+  if (window.CSS && CSS.escape) return CSS.escape(value || '');
+  return String(value || '').replace(/["\\]/g, '\\$&');
+}
+</script>
+
+</body>
+</html>
