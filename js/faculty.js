@@ -39,7 +39,10 @@ function saveFaculty(e) {
         name: document.getElementById("form-name").value,
         designation: document.getElementById("form-designation").value,
         department: document.getElementById("form-dept").value,
-        subject: document.getElementById("form-subject").value
+        subject: document.getElementById("form-subject").value,
+        email: document.getElementById("form-email").value || '',
+        phone: document.getElementById("form-phone").value || '',
+        photo: document.getElementById("form-photo").value || ''
     };
 
     let facultyList = JSON.parse(localStorage.getItem("facultyList")) || [];
@@ -49,6 +52,20 @@ function saveFaculty(e) {
     localStorage.setItem("facultyList", JSON.stringify(facultyList));
 
     addFacultyRow(faculty, facultyList.length - 1);
+
+    if (window.createOrUpdateUser) {
+        window.createOrUpdateUser({
+            username: faculty.name,
+            password: faculty.id,
+            role: 'Faculty',
+            department: faculty.department,
+            email: faculty.email,
+            phone: faculty.phone,
+            profilePicture: faculty.photo,
+            accountType: 'faculty',
+            accountIdentifier: faculty.id
+        });
+    }
 
     document.getElementById("facultyForm").reset();
 

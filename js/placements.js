@@ -1,373 +1,193 @@
-// ======================================
-// Placement Management System
-// ======================================
+const searchInput = document.getElementById("searchInput");
+const addBtn = document.getElementById("addPlacementBtn");
+const modal = document.getElementById("placementModal");
+const cancelBtn = document.getElementById("cancelBtn");
+const saveBtn = document.getElementById("saveBtn");
 
-let placementData = [];
+const companyInput = document.getElementById("company");
+const roleInput = document.getElementById("role");
+const packageInput = document.getElementById("package");
+const cgpaInput = document.getElementById("cgpa");
+const dateInput = document.getElementById("date");
 
-let editIndex = -1;
+const tableBody = document.querySelector("#placementTable tbody");
 
-const STORAGE_KEY = "placement_students";
-// ======================================
-// Page Load
-// ======================================
+if (!tableBody || !modal || !addBtn || !cancelBtn || !saveBtn) {
+    console.warn('Placement page elements are not ready yet.');
+} else {
 
-document.addEventListener("DOMContentLoaded", () => {
+addBtn.onclick = function () {
 
-    loadPlacements();
+    modal.style.display = "flex";
 
-    displayPlacements();
+};
 
-    updateSummaryCards();
+cancelBtn.onclick = function () {
 
-    document
-        .getElementById("placementForm")
-        .addEventListener("submit", savePlacement);
+    modal.style.display = "none";
 
-});
-// ======================================
-// Load Placement Data
-// ======================================
+    clearFields();
 
-function loadPlacements() {
+};
 
-    const savedData = localStorage.getItem(STORAGE_KEY);
+window.onclick = function (e) {
 
-    if (savedData) {
+    if (e.target == modal) {
 
-        placementData = JSON.parse(savedData);
+        modal.style.display = "none";
 
-    } else {
-
-        placementData = [];
+        clearFields();
 
     }
 
-}
-// ======================================
-// Save Data to LocalStorage
-// ======================================
+};
 
-function saveToLocalStorage() {
+function clearFields() {
 
-    localStorage.setItem(
-
-        STORAGE_KEY,
-
-        JSON.stringify(placementData)
-
-    );
+    companyInput.value = "";
+    roleInput.value = "";
+    packageInput.value = "";
+    cgpaInput.value = "";
+    dateInput.value = "";
 
 }
-// ======================================
-// Display Placement Data
-// ======================================
 
-function displayPlacements() {
+if (searchInput) {
+    searchInput.addEventListener("keyup", function () {
 
-    const table = document.getElementById("students-table");
+        const value = this.value.toLowerCase();
 
-    const rows = table.querySelectorAll("tr");
+        const rows = tableBody.getElementsByTagName("tr");
 
-    rows.forEach((row, index) => {
+        for (let i = 0; i < rows.length; i++) {
 
-        if (index !== 0) {
+            const text = rows[i].innerText.toLowerCase();
 
-            row.remove();
+            if (text.indexOf(value) > -1) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
 
         }
 
     });
+}
+saveBtn.onclick = function () {
 
-    placementData.forEach((student, index) => {
+    if (
+        companyInput.value.trim() == "" ||
+        roleInput.value.trim() == "" ||
+        packageInput.value.trim() == "" ||
+        cgpaInput.value.trim() == "" ||
+        dateInput.value == ""
+    ) {
 
-        const row = table.insertRow();
+        alert("Please fill all fields.");
 
-        row.innerHTML = `
+        return;
 
-            <td>${student.regNo}</td>
+    }
 
-            <td>${student.name}</td>
+    const row = tableBody.insertRow();
 
-            <td>${student.department}</td>
+    row.innerHTML = `
 
-            <td>${student.year}</td>
+        <td style="padding:15px;">${companyInput.value}</td>
 
-            <td>${student.status}</td>
+        <td>${roleInput.value}</td>
 
-            <td>
+        <td>${packageInput.value}</td>
 
-                <button class="edit-btn"
-                onclick="editPlacement(${index})">
+        <td>${cgpaInput.value}</td>
 
-                ✏ Edit
+        <td>${dateInput.value}</td>
 
-                </button>
+        <td style="color:green;font-weight:bold;">Open</td>
 
-                <button class="delete-btn"
-                onclick="deletePlacement(${index})">
+        <td>
 
-                🗑 Delete
+            <button class="editBtn"
+            style="background:#16a34a;
+            color:white;
+            border:none;
+            padding:7px 12px;
+            border-radius:5px;
+            cursor:pointer;">
 
-                </button>
+            Edit
 
-            </td>
+            </button>
 
-        `;
+            <button class="deleteBtn"
+            style="background:#dc2626;
+            color:white;
+            border:none;
+            padding:7px 12px;
+            border-radius:5px;
+            cursor:pointer;">
+
+            Delete
+
+            </button>
+
+        </td>
+
+    `;
+
+    modal.style.display = "none";
+
+    clearFields();
+
+    attachEvents();
+
+};
+
+function attachEvents() {
+
+    const deleteButtons = document.querySelectorAll(".deleteBtn");
+
+    deleteButtons.forEach(function(btn){
+
+        btn.onclick = function(){
+
+            if(confirm("Delete this placement?")){
+
+                this.closest("tr").remove();
+
+            }
+
+        };
+
+    });
+
+    const editButtons = document.querySelectorAll(".editBtn");
+
+    editButtons.forEach(function(btn){
+
+        btn.onclick = function(){
+
+            const row = this.closest("tr");
+
+            companyInput.value = row.cells[0].innerText;
+            roleInput.value = row.cells[1].innerText;
+            packageInput.value = row.cells[2].innerText;
+            cgpaInput.value = row.cells[3].innerText;
+            dateInput.value = row.cells[4].innerText;
+
+            modal.style.display = "flex";
+
+            row.remove();
+
+        };
 
     });
 
 }
-// ======================================
-// Update Summary Cards
-// ======================================
 
-function updateSummaryCards() {
-
-    const total = placementData.length;
-
-    const placed = placementData.filter(student =>
-        student.status === "Placed"
-    ).length;
-
-    const registered = placementData.filter(student =>
-        student.status !== "Not Registered"
-    ).length;
-
-    document.getElementById("total-students").innerText = total;
-
-    document.getElementById("registered-students").innerText = registered;
-
-    document.getElementById("placed-students").innerText = placed;
-
-    document.getElementById("placement-status").innerText =
-        placed > 0 ? "Ongoing" : "Preparation Phase";
-
+attachEvents();
 }
-// ======================================
-// Save Placement
-// ======================================
-
-function savePlacement(event) {
-
-    event.preventDefault();
-
-    const student = {
-
-        regNo: document.getElementById("reg-no").value,
-
-        name: document.getElementById("student-name").value,
-
-        department: document.getElementById("department").value,
-
-        year: document.getElementById("year").value,
-
-        status: document.getElementById("status").value
-
-    };
-
-    if (editIndex === -1) {
-
-        placementData.push(student);
-
-    } else {
-
-        placementData[editIndex] = student;
-
-        editIndex = -1;
-
-    }
-
-    saveToLocalStorage();
-
-    displayPlacements();
-
-    updateSummaryCards();
-
-    closePlacementForm();
-
-    document.getElementById("placementForm").reset();
-
-}
-// ======================================
-// Edit Placement
-// ======================================
-
-function editPlacement(index) {
-
-    editIndex = index;
-
-    const student = placementData[index];
-
-    document.getElementById("reg-no").value = student.regNo;
-
-    document.getElementById("student-name").value = student.name;
-
-    document.getElementById("department").value = student.department;
-
-    document.getElementById("year").value = student.year;
-
-    document.getElementById("status").value = student.status;
-
-    document.getElementById("placementFormTitle").innerText =
-        "Edit Placement";
-
-    openPlacementForm();
-
-}
-// ======================================
-// Delete Placement
-// ======================================
-
-function deletePlacement(index) {
-
-    const confirmDelete = confirm(
-        "Are you sure you want to delete this student?"
-    );
-
-    if (!confirmDelete) return;
-
-    placementData.splice(index, 1);
-
-    saveToLocalStorage();
-
-    displayPlacements();
-
-    updateSummaryCards();
-
-}
-// ======================================
-// Open / Close Modal
-// ======================================
-
-function openPlacementForm() {
-
-    document
-        .getElementById("placementFormModal")
-        .classList.add("active");
-
-}
-
-function closePlacementForm() {
-
-    document
-        .getElementById("placementFormModal")
-        .classList.remove("active");
-
-    document
-        .getElementById("placementForm")
-        .reset();
-
-    document
-        .getElementById("placementFormTitle")
-        .innerText = "Add Placement";
-
-    editIndex = -1;
-
-}
-    
-<div class="modal-overlay" id="companyModal">
-
-    <div class="modal-card">
-
-        <div class="modal-header">
-
-            <h2>Add Company</h2>
-
-            <button
-                class="modal-close"
-                onclick="closeCompanyModal()">
-
-                &times;
-
-            </button>
-
-        </div>
-
-        <div class="modal-body">
-
-            <form id="companyForm" class="student-form">
-
-                <label>
-
-                    Company Name
-
-                    <input
-                        type="text"
-                        id="companyName"
-                        required>
-
-                </label>
-
-                <label>
-
-                    Job Role
-
-                    <input
-                        type="text"
-                        id="jobRole"
-                        required>
-
-                </label>
-
-                <label>
-
-                    Package (LPA)
-
-                    <input
-                        type="number"
-                        id="package"
-                        step="0.1"
-                        required>
-
-                </label>
-
-                <label>
-
-                    Drive Date
-
-                    <input
-                        type="date"
-                        id="driveDate"
-                        required>
-
-                </label>
-
-                <label class="full-width">
-
-                    Eligibility
-
-                    <input
-                        type="text"
-                        id="eligibility"
-                        placeholder="Eg: CGPA 7.0+">
-
-                </label>
-
-                <div class="form-actions full-width">
-
-                    <button
-                        type="button"
-                        class="cancel-btn"
-                        onclick="closeCompanyModal()">
-
-                        Cancel
-
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="save-btn">
-
-                        Save Company
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>

@@ -1,183 +1,260 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings | CSE Dashboard</title>
-
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/dark-mode.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | CSE Dashboard</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<link rel="stylesheet" href="../css/dark-mode.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="../css/erp-modern.css">
-    <script src="../js/darkmode.js"></script>
-
-    <style>
-        *{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
-        body{ background:#facc15; }
-        .sidebar{ position:fixed; width:240px; height:100%; background:#54208f; color:#fff; padding-top:20px }
-        .sidebar h2{ text-align:center; margin-bottom:30px }
-        .sidebar ul{ list-style:none }
-        .sidebar ul li{ padding:12px 22px }
-        .sidebar ul li:hover{ background:#3d1866 }
-        .sidebar ul li a{ color:#fff; text-decoration:none; display:block }
-        .main{ margin-left:240px }
-        .header{ background:rgba(255,255,255,0.95); padding:18px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 2px 8px rgba(0,0,0,0.06) }
-        .header-logo{ height:56px; width:auto }
-        .header h1{ color:#5b21b6; margin:0; font-size:20px }
-        .header h3{ color:#5b21b6; margin:0; font-size:13px }
-        .container{ padding:28px; max-width:800px; margin:0 auto }
-        .section-header h1{ color:#5b21b6; font-size:22px; margin-bottom:28px }
-        .settings-card{ background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:28px }
-        .setting{ margin-bottom:24px }
-        label{ display:block; font-weight:600; margin-bottom:10px; color:#5b21b6 }
-        input[type="text"],
-        input[type="email"],
-        select{ 
-            width:100%; 
-            padding:12px; 
-            border:1px solid #e6e6e6; 
-            border-radius:8px; 
-            font-size:15px;
-            color:#333;
-        }
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        select:focus{ outline:none; border-color:#54208f; box-shadow:0 0 0 3px rgba(84,32,143,0.1) }
-        .switch{ display:flex; justify-content:space-between; align-items:center; margin:20px 0; padding:16px 0; border-bottom:1px solid #f0f0f0 }
-        .switch label{ margin:0; cursor:pointer }
-        .switch input[type="checkbox"]{ width:50px; height:28px; cursor:pointer }
-        .button-group{ display:flex; gap:12px; margin-top:32px }
-        button{ 
-            flex:1;
-            padding:14px; 
-            border:none; 
-            border-radius:8px; 
-            font-size:16px; 
-            cursor:pointer; 
-            transition:0.3s;
-            font-weight:600;
-        }
-        .btn-save{ background:#54208f; color:#fff }
-        .btn-save:hover{ background:#3d1866 }
-                <button class="btn-reset" onclick="resetSettings()">Reset</button>
-                <button class="btn-reset" onclick="resetSettings()">Reset</button>
-        footer{ background:#54208f; color:#fff; text-align:center; padding:14px; margin-top:30px }
-    </style>
-
+<script src="../js/darkmode.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#facc15;color:#222}
+.sidebar{position:fixed;left:0;top:0;width:240px;height:100%;background:#54208f;color:#fff;padding-top:20px;z-index:10}
+.sidebar h2{text-align:center;margin-bottom:24px;font-size:20px}
+.sidebar ul{list-style:none}
+.sidebar ul li{padding:12px 22px;transition:0.25s}
+.sidebar ul li:hover{background:#3d1866}
+.sidebar ul li a{color:#fff;text-decoration:none;display:block}
+.sidebar ul li.active{background:#3d1866}
+.main{margin-left:240px;min-height:100vh}
+.header{background:rgba(255,255,255,0.97);padding:18px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+.header-brand{display:flex;align-items:center;gap:16px}
+.header-logo{height:56px;width:auto}
+.header h1{color:#5b21b6;margin:0;font-size:20px}
+.header h3{color:#5b21b6;margin:0;font-size:13px;font-weight:500}
+.theme-toggle{background:#54208f;color:#fff;border:none;border-radius:999px;padding:10px 16px;cursor:pointer}
+.content{padding:28px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:22px}
+.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,0.08);transition:0.25s;display:flex;align-items:center;gap:16px}
+.card:hover{transform:translateY(-4px)}
+.card-icon{width:48px;height:48px;border-radius:14px;background:#f4ebff;color:#54208f;display:flex;align-items:center;justify-content:center;font-size:22px}
+.card-value{font-size:28px;font-weight:700;color:#54208f;margin-top:4px}
+.card-label{color:#6b7280;font-size:14px}
+.panel{background:#fff;border-radius:16px;padding:24px;box-shadow:0 8px 20px rgba(0,0,0,0.08);margin-bottom:20px}
+.panel-title{color:#54208f;font-size:18px;margin-bottom:16px;font-weight:700}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:13px;font-weight:700;color:#374151}
+.form-group input,.form-group select,.form-group textarea{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;font-size:14px}
+.form-group textarea{resize:vertical;min-height:95px}
+.switch-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0}
+.switch-row:last-child{border-bottom:none}
+.switch-row label{margin:0;font-weight:600;color:#374151}
+.switch-row input[type="checkbox"]{width:44px;height:24px;accent-color:#54208f}
+.button-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.btn{padding:10px 16px;border:none;border-radius:10px;cursor:pointer;font-weight:600}
+.btn-primary{background:#54208f;color:#fff}
+.btn-secondary{background:#f3f4f6;color:#374151}
+.btn-danger{background:#fee2e2;color:#b91c1c}
+.helper{font-size:12px;color:#6b7280;margin-top:4px}
+footer{background:#54208f;color:#fff;text-align:center;padding:14px;margin-top:30px}
+@media (max-width:900px){.sidebar{width:100%;height:auto;position:relative}.main{margin-left:0}.content{padding:20px}.form-grid{grid-template-columns:1fr}}
+@media (max-width:600px){.header{flex-direction:column;align-items:flex-start;gap:12px}.cards{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-
 <div class="sidebar">
-    <h2>CSE Dashboard</h2>
-    <ul>
-        <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
-        <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
-        <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
-        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
-        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
-        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
-        <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
-        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
-        <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
-        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
-        <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
-        <li><a href="settings.html" class="active"><i class="fas fa-gear"></i> Settings</a></li>
-        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
-    </ul>
+  <h2>CSE Dashboard</h2>
+  <ul>
+    <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
+    <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+    <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+    <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+    <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+    <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+    <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
+    <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+    <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+    <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+    <li class="active"><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+    <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
 </div>
-
 <div class="main">
-    <div class="header" style="justify-content: space-between; width: 100%;">
-        <div style="display: flex; align-items: center; gap: 18px;">
-            <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
-            <div>
-                <h1>Settings</h1>
-                <h3>Computer Science & Engineering Department</h3>
-            </div>
-        </div>
-        <button id="themeToggle" type="button">&#127769; Dark</button>
-            &#127769; Dark
-        </button>
+  <div class="header">
+    <div class="header-brand">
+      <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
+      <div>
+        <h1>Settings</h1>
+        <h3>Computer Science & Engineering Department</h3>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button">🌙 Dark</button>
+  </div>
+  <div class="content">
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-user-shield"></i></div>
+        <div><div class="card-label">Total Admins</div><div class="card-value" id="totalAdmins">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-users"></i></div>
+        <div><div class="card-label">Active Users</div><div class="card-value" id="activeUsers">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-server"></i></div>
+        <div><div class="card-label">System Status</div><div class="card-value" id="systemStatus">Online</div></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <div><div class="card-label">Last Backup</div><div class="card-value" id="lastBackup">--</div></div>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="section-header">
-            <h1>Dashboard Settings</h1>
+    <div class="panel">
+      <h3 class="panel-title">Profile Settings</h3>
+      <form id="profileForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="adminName">Admin Name</label>
+            <input id="adminName" name="adminName" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="department">Department</label>
+            <input id="department" name="department" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="designation">Designation</label>
+            <input id="designation" name="designation" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="profilePhoto">Profile Photo</label>
+            <input id="profilePhoto" name="profilePhoto" type="text" placeholder="Enter image URL">
+          </div>
         </div>
-
-        <div class="settings-card">
-
-            <div class="setting">
-                <label>Department Name</label>
-                <input type="text" value="Computer Science and Engineering">
-            </div>
-
-            <div class="setting">
-                <label>Academic Year</label>
-                <select>
-                    <option>2026-2027</option>
-                    <option>2025-2026</option>
-                    <option>2024-2025</option>
-                </select>
-            </div>
-
-            <div class="setting">
-                <label>Current Year</label>
-                <select>
-                    <option selected>III Year</option>
-                    <option>II Year</option>
-                    <option>IV Year</option>
-                    <option>I Year</option>
-                </select>
-            </div>
-
-            <div class="setting">
-                <label>Theme</label>
-                <select>
-                    <option selected>Default (Purple & Yellow)</option>
-                    <option>Light</option>
-                    <option>Dark</option>
-                    <option>Blue</option>
-                </select>
-            </div>
-
-            <div class="switch">
-                <label>Email Notifications</label>
-                <input type="checkbox" checked>
-            </div>
-
-            <div class="switch">
-                <label>Enable Chatbot</label>
-                <input type="checkbox" checked>
-            </div>
-
-            <div class="switch">
-                <label>Auto Backup</label>
-                <input type="checkbox" checked>
-            </div>
-
-            <div class="button-group">
-                <button class="btn-save" onclick="saveSettings()">Save Settings</button>
-                <button class="btn-reset" onclick="resetSettings()">Reset</button>
-            </div>
-
+        <div class="button-row">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-secondary" type="button" id="resetProfileBtn">Reset</button>
         </div>
+      </form>
     </div>
+
+    <div class="panel">
+      <h3 class="panel-title">Account Settings</h3>
+      <form id="passwordForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="currentPassword">Current Password</label>
+            <input id="currentPassword" name="currentPassword" type="password" required>
+          </div>
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input id="newPassword" name="newPassword" type="password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" name="confirmPassword" type="password" required>
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="btn btn-primary" type="submit">Change Password</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title">System Settings</h3>
+      <div class="switch-row">
+        <label for="darkModeToggle">Dark Mode</label>
+        <input id="darkModeToggle" type="checkbox">
+      </div>
+      <div class="switch-row">
+        <label for="lightModeToggle">Light Mode</label>
+        <input id="lightModeToggle" type="checkbox">
+      </div>
+      <div class="form-group">
+        <label for="language">Language</label>
+        <select id="language">
+          <option value="English">English</option>
+          <option value="Tamil">Tamil</option>
+        </select>
+      </div>
+      <div class="switch-row">
+        <label for="notificationToggle">Notification Toggle</label>
+        <input id="notificationToggle" type="checkbox">
+      </div>
+      <div class="switch-row">
+        <label for="autoSaveToggle">Auto Save Toggle</label>
+        <input id="autoSaveToggle" type="checkbox">
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title">Security Settings</h3>
+      <div class="switch-row">
+        <label for="sessionTimeout">Session Timeout</label>
+        <input id="sessionTimeout" type="checkbox">
+      </div>
+      <div class="switch-row">
+        <label for="twoFactor">Two Factor Authentication</label>
+        <input id="twoFactor" type="checkbox">
+      </div>
+      <div class="switch-row">
+        <label for="loginAlert">Login Alert</label>
+        <input id="loginAlert" type="checkbox">
+      </div>
+      <div class="switch-row">
+        <label for="rememberMe">Remember Me</label>
+        <input id="rememberMe" type="checkbox">
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title">Backup Settings</h3>
+      <div class="button-row">
+        <button class="btn btn-primary" type="button" id="backupBtn">Backup Data</button>
+        <button class="btn btn-secondary" type="button" id="restoreBtn">Restore Data</button>
+        <button class="btn btn-secondary" type="button" id="exportBtn">Export Settings</button>
+        <button class="btn btn-secondary" type="button" id="importBtn">Import Settings</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="panel-title">About</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="collegeName">College Name</label>
+          <input id="collegeName" name="collegeName" type="text">
+        </div>
+        <div class="form-group">
+          <label for="aboutDepartment">Department</label>
+          <input id="aboutDepartment" name="aboutDepartment" type="text">
+        </div>
+        <div class="form-group">
+          <label for="erpVersion">ERP Version</label>
+          <input id="erpVersion" name="erpVersion" type="text">
+        </div>
+        <div class="form-group">
+          <label for="developerName">Developer Name</label>
+          <input id="developerName" name="developerName" type="text">
+        </div>
+        <div class="form-group full">
+          <label for="academicYear">Academic Year</label>
+          <input id="academicYear" name="academicYear" type="text">
+        </div>
+      </div>
+      <div class="button-row">
+        <button class="btn btn-primary" type="button" id="saveAboutBtn">Save About</button>
+      </div>
+    </div>
+  </div>
 </div>
-
-<footer>
-    &copy; 2026 CSE Dashboard. All rights reserved.
-</footer>
-
-<script>
-function saveSettings(){
-    alert("Settings Saved Successfully!");
-}
-                <button class="btn-reset" onclick="resetSettings()">Reset</button>
-                <button class="btn-reset" onclick="resetSettings()">Reset</button>
-}
-</script>
-
+<footer>&copy; 2026 CSE Dashboard. All rights reserved.</footer>
+<script src="../js/auth.js"></script>
+<script src="../js/settings.js"></script>
 </body>
 </html>

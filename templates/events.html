@@ -3,184 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Events | CSE Dashboard</title>
-
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/dashboard.css">
 <link rel="stylesheet" href="../css/dark-mode.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="../css/erp-modern.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="../js/darkmode.js"></script>
-
 <style>
-*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
-body{ background:#facc15; }
-.sidebar{ position:fixed; width:240px; height:100%; background:#54208f; color:#fff; padding-top:20px }
-.sidebar h2{ text-align:center; margin-bottom:30px }
-.sidebar ul{ list-style:none }
-.sidebar ul li{ padding:12px 22px }
-.sidebar ul li:hover{ background:#3d1866 }
-.sidebar ul li a{ color:#fff; text-decoration:none; display:block }
-.main{ margin-left:240px }
-.header{ background:rgba(255,255,255,0.95); padding:18px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 2px 8px rgba(0,0,0,0.06) }
-.header-logo{ height:56px; width:auto }
-.header h1{ color:#5b21b6; margin:0; font-size:20px }
-.header h3{ color:#5b21b6; margin:0; font-size:13px }
-.container{ padding:28px }
-.section-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px }
-.section-header h1{ color:#5b21b6; font-size:22px }
-.section-header h2{ color:#5b21b6; font-size:18px; margin-bottom:20px }
-.search-box{ display:flex; gap:12px; align-items:center; margin-bottom:18px }
-.search-box input{ flex:1; padding:10px 12px; border:1px solid #e6e6e6; border-radius:8px }
-.add-btn{ background:#54208f; color:#fff; border:none; padding:10px 18px; border-radius:8px; cursor:pointer }
-.add-btn:hover{ background:#3d1866 }
-.table-wrapper{ background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); overflow:hidden; margin-bottom:28px }
-table{ width:100%; border-collapse:collapse }
-th{ background:#54208f; color:#fff; padding:14px 16px; text-align:left; font-weight:600 }
-td{ padding:14px 16px; border-bottom:1px solid #f0f0f0 }
-tr:hover{ background:#fafafa }
-.status{ display:inline-block; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600 }
-.status.active{ background:#d1fae5; color:#065f46 }
-footer{ background:#54208f; color:#fff; text-align:center; padding:14px; margin-top:30px }
-.recent-events{ background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); padding:20px; margin-bottom:28px }
-.recent-events ul{ list-style:none; padding:0; margin:0 }
-.recent-events li{ padding:10px 0; color:#5b21b6; border-bottom:1px solid #f0f0f0 }
-.recent-events li:last-child{ border-bottom:none }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#facc15;color:#222}
+.sidebar{position:fixed;left:0;top:0;width:240px;height:100%;background:#54208f;color:#fff;padding-top:20px;z-index:10}
+.sidebar h2{text-align:center;margin-bottom:24px;font-size:20px}
+.sidebar ul{list-style:none}
+.sidebar ul li{padding:12px 22px;transition:0.25s}
+.sidebar ul li:hover{background:#3d1866}
+.sidebar ul li a{color:#fff;text-decoration:none;display:block}
+.sidebar ul li.active{background:#3d1866}
+.main{margin-left:240px;min-height:100vh}
+.header{background:rgba(255,255,255,0.97);padding:18px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+.header-brand{display:flex;align-items:center;gap:16px}
+.header-logo{height:56px;width:auto}
+.header h1{color:#5b21b6;margin:0;font-size:20px}
+.header h3{color:#5b21b6;margin:0;font-size:13px;font-weight:500}
+.theme-toggle{background:#54208f;color:#fff;border:none;border-radius:999px;padding:10px 16px;cursor:pointer}
+.content{padding:28px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:22px}
+.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,0.08);transition:0.25s;display:flex;align-items:center;gap:16px}
+.card:hover{transform:translateY(-4px)}
+.card-icon{width:48px;height:48px;border-radius:14px;background:#f4ebff;color:#54208f;display:flex;align-items:center;justify-content:center;font-size:22px}
+.card-value{font-size:28px;font-weight:700;color:#54208f;margin-top:4px}
+.card-label{color:#6b7280;font-size:14px}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#fff;padding:16px 18px;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.08);margin-bottom:18px}
+.toolbar-group{display:flex;flex-wrap:wrap;gap:10px;align-items:center;flex:1}
+.toolbar input,.toolbar select{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;min-width:180px}
+.toolbar .add-btn{background:#54208f;color:#fff;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;transition:0.25s}
+.toolbar .add-btn:hover{background:#3d1866}
+.table-wrap{background:#fff;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.08);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{background:#54208f;color:#fff;padding:14px 16px;text-align:left;font-weight:600}
+td{padding:14px 16px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+tr:hover{background:#faf7ff}
+.status-pill{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.status-completed{background:#dcfce7;color:#166534}
+.status-upcoming{background:#fef3c7;color:#92400e}
+.status-cancelled{background:#fee2e2;color:#b91c1c}
+.action-btn{padding:8px 10px;border:none;border-radius:8px;cursor:pointer;margin-right:6px}
+.action-btn.edit{background:#e9d5ff;color:#6d28d9}
+.action-btn.delete{background:#fee2e2;color:#b91c1c}
+.empty-state{padding:24px;text-align:center;color:#6b7280}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:18px;width:min(700px,100%);box-shadow:0 12px 35px rgba(0,0,0,0.2)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid #f0f0f0}
+.modal-header h3{color:#54208f}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#6b7280}
+.modal-body{padding:20px 22px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:13px;font-weight:700;color:#374151}
+.form-group input,.form-group select,.form-group textarea{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;font-size:14px}
+.form-group textarea{resize:vertical;min-height:90px}
+.modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:0 22px 20px}
+.modal-footer .btn{padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+.modal-footer .btn-secondary{background:#f3f4f6;color:#374151}
+.modal-footer .btn-primary{background:#54208f;color:#fff}
+footer{background:#54208f;color:#fff;text-align:center;padding:14px;margin-top:30px}
+@media (max-width:900px){.sidebar{width:100%;height:auto;position:relative}.main{margin-left:0}.content{padding:20px}.toolbar{flex-direction:column;align-items:stretch}.toolbar-group{flex-direction:column;align-items:stretch}.toolbar input,.toolbar select{min-width:0;width:100%}}
+@media (max-width:600px){.header{flex-direction:column;align-items:flex-start;gap:12px}.form-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
 </style>
-
 </head>
-
 <body>
-
 <div class="sidebar">
-    <h2>CSE Dashboard</h2>
-    <ul>
-        <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
-        <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
-        <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
-        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
-        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
-        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
-        <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
-        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
-        <li><a href="events.html" class="active"><i class="fas fa-calendar"></i> Events</a></li>
-        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
-        <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
-        <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
-        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
-    </ul>
+  <h2>CSE Dashboard</h2>
+  <ul>
+    <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
+    <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+    <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+    <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+    <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+    <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+    <li><a href="projects.html"><i class="fas fa-laptop-code"></i> Projects</a></li>
+    <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+    <li class="active"><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+    <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+    <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+    <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
 </div>
-
 <div class="main">
-    <div class="header">
-        <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
-        <div>
-            <h1>Event Management</h1>
-            <h3>Computer Science & Engineering Department</h3>
-        </div>
+  <div class="header">
+    <div class="header-brand">
+      <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
+      <div>
+        <h1>Event Management</h1>
+        <h3>Computer Science & Engineering Department</h3>
+      </div>
     </div>
-
-        <div class="section-header">
-            <h1>Upcoming Events</h1>
-            <button class="add-btn">+ Add Event</button>
-        </div>
-
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder=" Search Event by name, date or venue..." onkeyup="searchEvent()">
-        </div>
-
-        <div class="table-wrapper">
-            <table id="eventTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Event</th>
-                        <th>Venue</th>
-                        <th>Coordinator</th>
-                        <th>Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>10 July 2026</td>
-                        <td>Python Programming Workshop</td>
-                        <td>CSE Lab 1</td>
-                        <td>Dr. Priya</td>
-                        <td><span class="status active">Workshop</span></td>
-                    </tr>
-                    <tr>
-                        <td>22 July 2026</td>
-                        <td>Web Development Bootcamp</td>
-                        <td>Seminar Hall</td>
-                        <td>Ms. Anitha</td>
-                        <td><span class="status active">Workshop</span></td>
-                    </tr>
-                    <tr>
-                        <td>05 August 2026</td>
-                        <td>AI & Machine Learning Seminar</td>
-                        <td>Auditorium</td>
-                        <td>Dr. R. Kumar</td>
-                        <td><span class="status active">Technical</span></td>
-                    </tr>
-                    <tr>
-                        <td>18 August 2026</td>
-                        <td>Project Expo</td>
-                        <td>Conference Hall</td>
-                        <td>Project Coordinators</td>
-                        <td><span class="status active">Technical</span></td>
-                    </tr>
-                    <tr>
-                        <td>02 September 2026</td>
-                        <td>Hackathon 2026</td>
-                        <td>Innovation Lab</td>
-                        <td>Placement Cell</td>
-                        <td><span class="status active">Technical</span></td>
-                    </tr>
-                    <tr>
-                        <td>15 September 2026</td>
-                        <td>Technical Symposium</td>
-                        <td>Main Auditorium</td>
-                        <td>CSE Department</td>
-                        <td><span class="status active">Technical</span></td>
-                    </tr>
-                    <tr>
-                        <td>05 October 2026</td>
-                        <td>Career Guidance Program</td>
-                        <td>Seminar Hall</td>
-                        <td>Placement Officer</td>
-                        <td><span class="status active">Placement</span></td>
-                    </tr>
-                    <tr>
-                        <td>20 October 2026</td>
-                        <td>Freshers & Cultural Fest</td>
-                        <td>College Ground</td>
-                        <td>Student Council</td>
-                        <td><span class="status active">Cultural</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="section-header">
-            <h2>Recent Events</h2>
-        </div>
-
-        <div class="recent-events">
-            <ul>
-                <li>&#10003; Orientation Program for III Year Students</li>
-                <li>&#10003; Java Full Stack Workshop</li>
-                <li>&#10003; Resume Building Session</li>
-                <li>&#10003; Data Science Awareness Seminar</li>
-                <li>&#10003; Mini Project Review</li>
-            </ul>
-        </div>
+    <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+  </div>
+  <div class="content">
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+        <div><div class="card-label">Total Events</div><div class="card-value" id="totalCount">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-clock"></i></div>
+        <div><div class="card-label">Upcoming Events</div><div class="card-value" id="upcomingCount">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+        <div><div class="card-label">Completed Events</div><div class="card-value" id="completedCount">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-microchip"></i></div>
+        <div><div class="card-label">Workshops & Seminars</div><div class="card-value" id="workshopCount">0</div></div>
+      </div>
     </div>
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <input type="text" id="searchInput" placeholder="Search event...">
+        <select id="categoryFilter">
+          <option value="All">All</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Seminar">Seminar</option>
+          <option value="Hackathon">Hackathon</option>
+          <option value="Technical">Technical</option>
+          <option value="Cultural">Cultural</option>
+          <option value="Sports">Sports</option>
+          <option value="Conference">Conference</option>
+          <option value="Guest Lecture">Guest Lecture</option>
+        </select>
+        <select id="statusFilter">
+          <option value="All">All</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <button class="add-btn" id="addEventBtn"><i class="fas fa-plus"></i> Add Event</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Event Name</th>
+            <th>Category</th>
+            <th>Venue</th>
+            <th>Organizer</th>
+            <th>Event Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Status</th>
+            <th>Participants</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="eventTableBody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<footer>
-    &copy; 2026 CSE Dashboard. All rights reserved.
-</footer>
-
+<div class="modal-overlay" id="eventModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Add Event</h3>
+      <button class="modal-close" id="closeModalBtn" type="button">&times;</button>
+    </div>
+    <form id="eventForm">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="eventName">Event Name</label>
+            <input id="eventName" name="eventName" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="">Select category</option>
+              <option>Workshop</option>
+              <option>Seminar</option>
+              <option>Hackathon</option>
+              <option>Technical</option>
+              <option>Cultural</option>
+              <option>Sports</option>
+              <option>Conference</option>
+              <option>Guest Lecture</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="venue">Venue</label>
+            <input id="venue" name="venue" required>
+          </div>
+          <div class="form-group">
+            <label for="organizer">Organizer</label>
+            <input id="organizer" name="organizer" required>
+          </div>
+          <div class="form-group">
+            <label for="coordinator">Coordinator</label>
+            <input id="coordinator" name="coordinator" required>
+          </div>
+          <div class="form-group">
+            <label for="eventDate">Event Date</label>
+            <input id="eventDate" name="eventDate" type="date" required>
+          </div>
+          <div class="form-group">
+            <label for="startTime">Start Time</label>
+            <input id="startTime" name="startTime" type="time" required>
+          </div>
+          <div class="form-group">
+            <label for="endTime">End Time</label>
+            <input id="endTime" name="endTime" type="time" required>
+          </div>
+          <div class="form-group">
+            <label for="participants">Expected Participants</label>
+            <input id="participants" name="participants" type="number" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+              <option value="">Select status</option>
+              <option>Upcoming</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelModalBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+<footer>&copy; 2026 CSE Dashboard. All rights reserved.</footer>
+<script src="../js/auth.js"></script>
+<script src="../js/events.js"></script>
 </body>
 </html>

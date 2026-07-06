@@ -140,6 +140,7 @@ Continue
 
 </div>
 
+<script src="../js/auth.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const loginForm = document.getElementById('loginForm');
@@ -159,7 +160,9 @@ Continue
                 return;
             }
 
-            if (username === 'subiksha' && password === '2007') {
+            const user = window.authenticateUser(username, password);
+            if (user) {
+                window.setCurrentUser(user);
                 window.location.href = 'dashboard.html';
             } else {
                 loginMessage.textContent = 'Invalid username or password.';

@@ -420,6 +420,7 @@ footer{ background:#54208f; color:#fff; text-align:center; padding:14px; margin-
         </div>
       </div>
       <button class="edit-btn" type="button" onclick="editCurrentStudent()">Edit Student</button>
+      <button class="delete-btn" type="button" onclick="deleteCurrentStudent()" style="margin-left:10px;">Delete Student</button>
     </div>
   </div>
 </div>
@@ -477,6 +478,7 @@ footer{ background:#54208f; color:#fff; text-align:center; padding:14px; margin-
 </footer>
 
 <script src="../js/app.js"></script>
+<script src="../js/auth.js"></script>
 <script src="../js/crud.js"></script>
 
 <script>
@@ -640,6 +642,19 @@ function saveStudentFromForm(event) {
   }
 
   saveStudentsToStorage();
+  if (window.createOrUpdateUser) {
+    window.createOrUpdateUser({
+      username: student.name,
+      password: student.reg,
+      role: 'Student',
+      department: student.dept || 'CSE',
+      email: student.email,
+      phone: student.phone,
+      profilePicture: student.photo,
+      accountType: 'student',
+      accountIdentifier: student.reg
+    });
+  }
   closeStudentForm();
   openStudentModal(row);
 }
@@ -660,6 +675,20 @@ function editCurrentStudent() {
     phone: row.getAttribute('data-phone') || '',
     photo: row.getAttribute('data-photo') || ''
   });
+}
+
+function deleteCurrentStudent() {
+  const row = document.querySelector(`#studentTable tbody tr[data-reg="${cssEscape(currentStudentReg)}"]`);
+  if (!row) return;
+  if (!confirm('Delete this student and their login account?')) return;
+  const studentName = row.getAttribute('data-name') || '';
+  row.remove();
+  saveStudentsToStorage();
+  if (studentName) {
+    removeStudentAccount(studentName);
+  }
+  closeStudentModal();
+  alert('Student deleted successfully.');
 }
 
 function openStudentModal(row) {
@@ -699,6 +728,12 @@ document.addEventListener('keydown', function(event) {
 
 function getAvatarUrl(name) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'Student')}&background=54208f&color=fff&size=128`;
+}
+
+function removeStudentAccount(studentName) {
+  if (window.removeUserByType) {
+    window.removeUserByType('student', studentName);
+  }
 }
 
 function escapeHtml(value) {

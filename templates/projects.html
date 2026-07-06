@@ -1,185 +1,970 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Projects | CSE Dashboard</title>
+<title>Project Management | CSE Dashboard</title>
 
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/dashboard.css">
 <link rel="stylesheet" href="../css/dark-mode.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="../css/erp-modern.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <script src="../js/darkmode.js"></script>
 
 <style>
-*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
-body{ background:#facc15; }
-.sidebar{ position:fixed; width:240px; height:100%; background:#54208f; color:#fff; padding-top:20px }
-.sidebar h2{ text-align:center; margin-bottom:30px }
-.sidebar ul{ list-style:none }
-.sidebar ul li{ padding:12px 22px }
-.sidebar ul li:hover{ background:#3d1866 }
-.sidebar ul li a{ color:#fff; text-decoration:none; display:block }
-.main{ margin-left:240px }
-.header{ background:rgba(255,255,255,0.95); padding:18px 24px; display:flex; align-items:center; gap:18px; box-shadow:0 2px 8px rgba(0,0,0,0.06) }
-.header-logo{ height:56px; width:auto }
-.header h1{ color:#5b21b6; margin:0; font-size:20px }
-.header h3{ color:#5b21b6; margin:0; font-size:13px }
-.container{ padding:28px }
-.section-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px }
-.section-header h1{ color:#5b21b6; font-size:22px }
-.section-header h2{ color:#5b21b6; font-size:18px; margin-bottom:20px; margin-top:20px }
-.search-box{ display:flex; gap:12px; align-items:center; margin-bottom:18px }
-.search-box input{ flex:1; padding:10px 12px; border:1px solid #e6e6e6; border-radius:8px }
-.add-btn{ background:#54208f; color:#fff; border:none; padding:10px 18px; border-radius:8px; cursor:pointer }
-.add-btn:hover{ background:#3d1866 }
-.table-wrapper{ background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); overflow:hidden; margin-bottom:28px }
-table{ width:100%; border-collapse:collapse }
-th{ background:#54208f; color:#fff; padding:14px 16px; text-align:left; font-weight:600 }
-td{ padding:14px 16px; border-bottom:1px solid #f0f0f0 }
-tr:hover{ background:#fafafa }
-.status{ display:inline-block; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600 }
-.status.active{ background:#d1fae5; color:#065f46 }
-.projects-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; margin-bottom:28px }
-.project-card{ padding:22px; border-radius:12px; background:#fff5d0; box-shadow:0 6px 18px rgba(0,0,0,0.08); border:1px solid #e6e6e6 }
-.project-card h3{ margin-bottom:10px; color:#4c1d95; font-size:18px }
-.project-card .meta{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px; color:#5b21b6; font-size:13px }
-.status-pill{ display:inline-block; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:600; background:#54208f; color:#facc15 }
-.project-card p{ color:#5b21b6; line-height:1.6; margin-bottom:14px; font-size:14px }
-.project-card ul{ list-style:none; padding:0; margin:0; display:grid; gap:8px }
-.project-card ul li{ display:flex; align-items:center; gap:10px; color:#5b21b6; font-size:13px }
-.project-card ul li::before{ content:'\\2022'; color:#54208f; font-weight:bold; margin-right:5px }
-.tech-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:20px }
-.tech-item{ padding:14px 12px; border-radius:10px; background:#fff5d0; display:flex; justify-content:space-between; align-items:center; color:#4c1d95; font-weight:600; font-size:13px; border:1px solid #e6e6e6 }
-footer{ background:#54208f; color:#fff; text-align:center; padding:14px; margin-top:30px }
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#facc15;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:240px;
+height:100%;
+background:#54208f;
+color:#fff;
+padding-top:20px;
+overflow-y:auto;
+}
+
+.sidebar h2{
+text-align:center;
+margin-bottom:30px;
+}
+
+.sidebar ul{
+list-style:none;
+}
+
+.sidebar ul li{
+padding:15px 25px;
+transition:.3s;
+}
+
+.sidebar ul li:hover{
+background:#3d1866;
+}
+
+.sidebar ul li a{
+color:white;
+text-decoration:none;
+display:block;
+}
+
+.main{
+margin-left:240px;
+min-height:100vh;
+}
+
+.header{
+background:white;
+padding:18px 24px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.header-left{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.header-logo{
+height:55px;
+}
+
+.header h1{
+color:#5b21b6;
+font-size:22px;
+}
+
+.header h3{
+color:#5b21b6;
+font-size:13px;
+margin-top:4px;
+}
+
+.theme-btn{
+
+background:#54208f;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:20px;
+cursor:pointer;
+font-weight:bold;
+
+}
+
+.dashboard-cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:30px;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 8px 18px rgba(0,0,0,.08);
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.card i{
+
+font-size:35px;
+color:#54208f;
+margin-bottom:15px;
+
+}
+
+.card h4{
+
+color:#666;
+margin-bottom:10px;
+
+}
+
+.card h2{
+
+font-size:32px;
+color:#54208f;
+
+}
+
+.toolbar{
+
+padding:0 30px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+
+}
+
+.search{
+
+width:320px;
+padding:12px 15px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+
+}
+
+.add-btn{
+
+background:#54208f;
+color:white;
+border:none;
+padding:12px 22px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+
+}
+
+.add-btn:hover{
+
+background:#3d1866;
+
+}
+
+.toolbar-right{
+
+display:flex;
+align-items:center;
+gap:15px;
+
+}
+
 </style>
 
 </head>
+
 <body>
 
 <div class="sidebar">
-    <h2>CSE Dashboard</h2>
-    <ul>
-        <li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
-        <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
-        <li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
-        <li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
-        <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
-        <li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
-        <li><a href="projects.html" class="active"><i class="fas fa-laptop-code"></i> Projects</a></li>
-        <li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
-        <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
-        <li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
-        <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
-        <li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
-        <li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
-    </ul>
+
+<h2>CSE Dashboard</h2>
+
+<ul>
+
+<li><a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a></li>
+
+<li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+
+<li><a href="faculty.html"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+
+<li><a href="attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+
+<li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+
+<li><a href="placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+
+<li style="background:#3d1866;">
+<a href="projects.html">
+
+<i class="fas fa-laptop-code"></i>
+
+Projects
+
+</a>
+</li>
+
+<li><a href="achievements.html"><i class="fas fa-trophy"></i> Achievements</a></li>
+
+<li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+
+<li><a href="notices.html"><i class="fas fa-bullhorn"></i> Notices</a></li>
+
+<li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+
+<li><a href="settings.html"><i class="fas fa-gear"></i> Settings</a></li>
+
+<li><a href="index.html"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
+
+</ul>
+
 </div>
 
 <div class="main">
-    <div class="header">
-        <img src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png" alt="St. Joseph University" class="header-logo">
-        <div>
-            <h1>Project Management</h1>
-            <h3>Computer Science & Engineering Department</h3>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="section-header">
-            <h1>Student Projects List</h1>
-            <button class="add-btn">+ Add Project</button>
-        </div>
+<div class="header">
 
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder=" Search Project by name, status or technology..." onkeyup="searchProject()">
-        </div>
+<div class="header-left">
 
-        <div class="table-wrapper">
-            <table id="projectTable">
-                <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Team Lead</th>
-                        <th>Technology</th>
-                        <th>Status</th>
-                        <th>Progress</th>
-                        <th>Due Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-        <p>Review student initiatives, milestones, and technology choices in a smooth modern layout.</p>
-    </div>
-                    <tr>
-                        <td>AI Chatbot for College</td>
-                        <td>Hari Prakash</td>
-                        <td>HTML, CSS, JavaScript</td>
-                        <td><span class="status active">Ongoing</span></td>
-                        <td>75%</td>
-                        <td>2026-12-15</td>
-                    </tr>
-                    <tr>
-                        <td>Smart Attendance System</td>
-                        <td>Lokeshwaran</td>
-                        <td>JavaScript</td>
-                        <td><span class="status active">Completed</span></td>
-                        <td>100%</td>
-                        <td>2026-09-10</td>
-                    </tr>
-                    <tr>
-                        <td>Library Management System</td>
-                        <td>Lorin Tedros</td>
-                        <td>HTML, CSS, JavaScript</td>
-                        <td><span class="status active">Ongoing</span></td>
-                        <td>60%</td>
-                        <td>2026-11-30</td>
-                    </tr>
-                    <tr>
-                        <td>Online Food Ordering App</td>
-                        <td>Meenakshi</td>
-                        <td>JavaScript, React</td>
-                        <td><span class="status active">Ongoing</span></td>
-                        <td>50%</td>
-                        <td>2026-12-20</td>
-                    </tr>
-                    <tr>
-                        <td>Hospital Management System</td>
-                        <td>Satish Kumar</td>
-                        <td>Python, MySQL</td>
-                        <td><span class="status active">Completed</span></td>
-                        <td>100%</td>
-                        <td>2026-08-25</td>
-                    </tr>
-                    <tr>
-                        <td>Student Performance Dashboard</td>
-                        <td>Subiksha</td>
-                        <td>HTML, CSS, JavaScript</td>
-                        <td><span class="status active">Ongoing</span></td>
-                        <td>85%</td>
-                        <td>2026-12-10</td>
-                    </tr>
-                    <tr>
-                        <td>Online Examination System</td>
-                        <td>Varalakshmi</td>
-                        <td>Python, MySQL</td>
-                        <td><span class="status active">Ongoing</span></td>
-                        <td>70%</td>
-                        <td>2026-12-05</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<img
+src="https://sju.ac.in/wp-content/uploads/2024/07/SJU-NEW-LOGO-HEADER.png"
+class="header-logo">
+
+<div>
+
+<h1>Project Management</h1>
+
+<h3>Computer Science & Engineering Department</h3>
+
 </div>
 
-<footer>
-    &copy; 2026 CSE Dashboard. All rights reserved.
+</div>
+
+<button
+id="themeToggle"
+class="theme-btn">
+
+🌙 Dark
+
+</button>
+
+</div>
+<div class="dashboard-cards">
+
+<div class="card">
+
+<i class="fas fa-diagram-project"></i>
+
+<h4>Total Projects</h4>
+
+<h2 id="totalProjects">78</h2>
+
+</div>
+
+<div class="card">
+
+<i class="fas fa-spinner"></i>
+
+<h4>Ongoing Projects</h4>
+
+<h2 id="ongoingProjects">28</h2>
+
+</div>
+
+<div class="card">
+
+<i class="fas fa-circle-check"></i>
+
+<h4>Completed Projects</h4>
+
+<h2 id="completedProjects">45</h2>
+
+</div>
+
+<div class="card">
+
+<i class="fas fa-users"></i>
+
+<h4>Final Year Teams</h4>
+
+<h2 id="teamCount">35</h2>
+
+</div>
+
+</div>
+<div class="toolbar">
+
+    <input
+        type="text"
+        id="searchInput"
+        class="search"
+        placeholder="Search Project, Guide or Technology">
+
+    <div class="toolbar-right">
+
+        <select id="statusFilter" class="filter">
+
+            <option value="All">All Status</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Completed">Completed</option>
+            <option value="Pending">Pending</option>
+
+        </select>
+
+        <button
+            class="add-btn"
+            id="addProjectBtn">
+
+            <i class="fas fa-plus"></i>
+
+            Add Project
+
+        </button>
+
+    </div>
+
+</div>
+
+<div style="padding:0 30px 30px;">
+
+<table
+id="projectTable"
+style="width:100%;background:white;border-collapse:collapse;border-radius:12px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,.08);">
+
+<thead>
+
+<tr
+style="background:#54208f;color:white;">
+
+<th style="padding:15px;">Project Name</th>
+
+<th>Guide</th>
+
+<th>Technology</th>
+
+<th>Status</th>
+
+<th>Progress</th>
+
+<th>Due Date</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="padding:15px;">
+
+AI Chatbot for College
+
+</td>
+
+<td>
+
+Dr. Kumar
+
+</td>
+
+<td>
+
+Python, Flask
+
+</td>
+
+<td>
+
+<span style="color:#16a34a;font-weight:bold;">
+
+Ongoing
+
+</span>
+
+</td>
+
+<td>
+
+<div
+style="width:120px;height:8px;background:#ddd;border-radius:20px;">
+
+<div
+style="width:75%;height:100%;background:#16a34a;border-radius:20px;">
+
+</div>
+
+</div>
+
+75%
+
+</td>
+
+<td>
+
+15-Dec-2026
+
+</td>
+
+<td>
+
+<button
+class="editBtn"
+style="background:#16a34a;color:white;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Edit
+
+</button>
+
+<button
+class="deleteBtn"
+style="background:#dc2626;color:white;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:15px;">
+
+Smart Attendance System
+
+</td>
+
+<td>
+
+Dr. Priya
+
+</td>
+
+<td>
+
+HTML, CSS, JavaScript
+
+</td>
+
+<td>
+
+<span style="color:#2563eb;font-weight:bold;">
+
+Completed
+
+</span>
+
+</td>
+
+<td>
+
+<div
+style="width:120px;height:8px;background:#ddd;border-radius:20px;">
+
+<div
+style="width:100%;height:100%;background:#2563eb;border-radius:20px;">
+
+</div>
+
+</div>
+
+100%
+
+</td>
+
+<td>
+
+10-Oct-2026
+
+</td>
+
+<td>
+
+<button
+class="editBtn"
+style="background:#16a34a;color:white;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Edit
+
+</button>
+
+<button
+class="deleteBtn"
+style="background:#dc2626;color:white;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+<tr>
+
+<td style="padding:15px;">
+
+Library Management System
+
+</td>
+
+<td>
+
+Dr. Rajesh
+
+</td>
+
+<td>
+
+Java, MySQL
+
+</td>
+
+<td>
+
+<span style="color:#16a34a;font-weight:bold;">
+
+Ongoing
+
+</span>
+
+</td>
+
+<td>
+
+<div style="width:120px;height:8px;background:#ddd;border-radius:20px;">
+
+<div style="width:65%;height:100%;background:#16a34a;border-radius:20px;"></div>
+
+</div>
+
+65%
+
+</td>
+
+<td>
+
+25-Nov-2026
+
+</td>
+
+<td>
+
+<button class="editBtn"
+style="background:#16a34a;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Edit
+
+</button>
+
+<button class="deleteBtn"
+style="background:#dc2626;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:15px;">
+
+IoT Smart Irrigation
+
+</td>
+
+<td>
+
+Dr. Vinoth
+
+</td>
+
+<td>
+
+IoT, ESP32, Python
+
+</td>
+
+<td>
+
+<span style="color:#ea580c;font-weight:bold;">
+
+Pending
+
+</span>
+
+</td>
+
+<td>
+
+<div style="width:120px;height:8px;background:#ddd;border-radius:20px;">
+
+<div style="width:40%;height:100%;background:#ea580c;border-radius:20px;"></div>
+
+</div>
+
+40%
+
+</td>
+
+<td>
+
+05-Jan-2027
+
+</td>
+
+<td>
+
+<button class="editBtn"
+style="background:#16a34a;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Edit
+
+</button>
+
+<button class="deleteBtn"
+style="background:#dc2626;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:15px;">
+
+Online Examination System
+
+</td>
+
+<td>
+
+Dr. Meena
+
+</td>
+
+<td>
+
+Python, Django
+
+</td>
+
+<td>
+
+<span style="color:#16a34a;font-weight:bold;">
+
+Ongoing
+
+</span>
+
+</td>
+
+<td>
+
+<div style="width:120px;height:8px;background:#ddd;border-radius:20px;">
+
+<div style="width:82%;height:100%;background:#16a34a;border-radius:20px;"></div>
+
+</div>
+
+82%
+
+</td>
+
+<td>
+
+18-Dec-2026
+
+</td>
+
+<td>
+
+<button class="editBtn"
+style="background:#16a34a;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Edit
+
+</button>
+
+<button class="deleteBtn"
+style="background:#dc2626;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:15px;">
+
+Student ERP Portal
+
+</td>
+
+<td>
+
+Dr. Suresh
+
+</td>
+
+<td>
+
+HTML, CSS, JavaScript
+
+</td>
+
+<td>
+
+<span style="color:#2563eb;font-weight:bold;">
+
+Completed
+
+</span>
+
+</td>
+
+<td>
+
+<div style="width:120px;height:8px;background:#ddd;border-radius:20px;">
+
+<div style="width:100%;height:100%;background:#2563eb;border-radius:20px;"></div>
+
+</div>
+
+100%
+
+</td>
+
+<td>
+
+12-Oct-2026
+
+</td>
+
+<td>
+
+<button class="editBtn"
+style="background:#16a34a;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Edit
+
+</button>
+
+<button class="deleteBtn"
+style="background:#dc2626;color:#fff;border:none;padding:7px 12px;border-radius:5px;cursor:pointer;">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+<div id="projectModal"
+style="display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+justify-content:center;
+align-items:center;">
+
+<div
+style="width:550px;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);">
+
+<h2
+style="color:#54208f;
+margin-bottom:20px;">
+
+Add New Project
+
+</h2>
+
+<input
+type="text"
+id="projectName"
+placeholder="Project Name"
+style="width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;">
+
+<input
+type="text"
+id="guideName"
+placeholder="Guide Name"
+style="width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;">
+
+<input
+type="text"
+id="technology"
+placeholder="Technology"
+style="width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;">
+
+<select
+id="status"
+style="width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;">
+
+<option>Ongoing</option>
+
+<option>Completed</option>
+
+<option>Pending</option>
+
+</select>
+
+<input
+type="number"
+id="progress"
+placeholder="Progress (%)"
+style="width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:8px;">
+
+<input
+type="date"
+id="dueDate"
+style="width:100%;
+padding:12px;
+margin-bottom:20px;
+border:1px solid #ccc;
+border-radius:8px;">
+
+<div
+style="display:flex;
+justify-content:flex-end;
+gap:10px;">
+
+<button
+id="cancelBtn"
+style="background:#6b7280;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;">
+
+Cancel
+
+</button>
+
+<button
+id="saveBtn"
+style="background:#54208f;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:6px;
+cursor:pointer;">
+
+Save Project
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+<footer
+style="background:#54208f;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:15px;
+margin-top:30px;
+width:100%;">
+
+© 2026 CSE Department Dashboard | Project Management
 </footer>
 
-</body>
-</html>
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/projects.js"></script>
 
 </body>
+
 </html>
